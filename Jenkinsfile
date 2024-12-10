@@ -4,17 +4,15 @@ pipeline {
     stages {
         stage('Run Tests') {
             steps {
-                // Install pytest and run the tests
-                sh 'pip3 install pytest'
-                sh 'pytest test_math.py --maxfail=1 --disable-warnings -q'
+                // Create and activate virtual environment, install pytest, and run tests
+                sh 'python3 -m venv venv && . venv/bin/activate && pip install pytest && pytest test_math.py --maxfail=1 --disable-warnings -q'
             }
         }
 
         stage('Zip Test Results') {
             steps {
-                // Create a directory for reports (if necessary) and zip the results
-                sh 'mkdir -p test_reports'
-                sh 'zip -r test_reports.zip test_reports/'
+                // Create and zip test results directory
+                sh 'mkdir -p test_reports && zip -r test_reports.zip test_reports/'
             }
         }
     }
