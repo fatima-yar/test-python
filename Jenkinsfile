@@ -7,17 +7,17 @@ pipeline {
                 // Install pytest globally on the Jenkins node (no virtualenv)
                 sh 'pip install --user pytest'
 
-                // Run the tests using the full path to pytest
-                sh '/var/lib/jenkins/.local/bin/pytest test_math.py --maxfail=1 --disable-warnings -q'
+                // Run the tests and save results in the 'test_reports' directory
+                sh '/var/lib/jenkins/.local/bin/pytest test_math.py --maxfail=1 --disable-warnings -q --junitxml=test_reports/results.xml'
             }
         }
 
         stage('Archive Test Results') {
             steps {
-                // Create the test results directory
+                // Create the test reports directory (if needed)
                 sh 'mkdir -p test_reports'
 
-                // Instead of tar, directly create the zip file from the test_reports directory
+                // Archive the XML test results file
                 sh 'zip -r test_reports.zip test_reports/'
             }
         }
