@@ -4,14 +4,11 @@ pipeline {
     stages {
         stage('Run Tests') {
             steps {
-                // Create virtual environment and install pytest without --user flag
-                sh 'python3 -m venv venv'
-                
-                // Install pytest inside the virtual environment
-                sh '. venv/bin/activate && pip install pytest'
+                // Install pytest globally on the Jenkins node (no virtualenv)
+                sh 'pip install pytest'
 
                 // Run the tests
-                sh '. venv/bin/activate && pytest test_math.py --maxfail=1 --disable-warnings -q'
+                sh 'pytest test_math.py --maxfail=1 --disable-warnings -q'
             }
         }
 
