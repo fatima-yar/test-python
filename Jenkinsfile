@@ -9,6 +9,10 @@ pipeline {
                     // Install pytest
                     sh 'pip install pytest'
 
+                    // Check if pytest is accessible
+                    sh 'echo $PATH'
+                    sh 'which pytest'
+
                     // Add the directory where pytest is installed to PATH
                     sh 'export PATH=$PATH:/var/lib/jenkins/.local/bin'
 
@@ -34,3 +38,4 @@ pipeline {
         }
     }
 }
+
