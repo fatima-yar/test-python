@@ -19,14 +19,18 @@ pipeline {
 
                 // Use tar to compress the test results instead of zip
                 sh 'tar -czf test_reports.tar.gz test_reports/'
+
+                // Convert the .tar.gz file to .zip
+                sh 'tar -xzf test_reports.tar.gz -C extracted_folder'  // Extract the tar.gz file
+                sh 'zip -r test_reports.zip extracted_folder/*'         // Compress into a zip
             }
         }
     }
 
     post {
         success {
-            // Archive the tar file as the test results
-            archiveArtifacts artifacts: 'test_reports.tar.gz', allowEmptyArchive: true
+            // Archive the zip file as the test results
+            archiveArtifacts artifacts: 'test_reports.zip', allowEmptyArchive: true
         }
     }
 }
