@@ -12,21 +12,21 @@ pipeline {
             }
         }
 
-        stage('Zip Test Results') {
+        stage('Archive Test Results') {
             steps {
-                // Ensure zip is installed before using it
-                sh 'apt-get update && apt-get install -y zip || yum install -y zip'
+                // Create the test results directory
+                sh 'mkdir -p test_reports'
 
-                // Create and zip the test results directory
-                sh 'mkdir -p test_reports && zip -r test_reports.zip test_reports/'
+                // Use tar to compress the test results instead of zip
+                sh 'tar -czf test_reports.tar.gz test_reports/'
             }
         }
     }
 
     post {
         success {
-            // Archive the zipped test results
-            archiveArtifacts artifacts: 'test_reports.zip', allowEmptyArchive: true
+            // Archive the tar file as the test results
+            archiveArtifacts artifacts: 'test_reports.tar.gz', allowEmptyArchive: true
         }
     }
 }
