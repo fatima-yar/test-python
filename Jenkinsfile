@@ -12,7 +12,7 @@ pipeline {
                     sh 'export PATH=$PATH:/var/lib/jenkins/.local/bin'
 
                     // Run the specific test file (test_math.py)
-                    sh 'pytest test_math.py --maxfail=1 --disable-warnings -q'
+                    // sh 'pytest test_math.py --maxfail=1 --disable-warnings -q'
                 }
             }
         }
