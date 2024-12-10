@@ -7,11 +7,8 @@ pipeline {
                 // Install pytest globally on the Jenkins node (no virtualenv)
                 sh 'pip install --user pytest'
 
-                // Update PATH to include the directory where pytest is installed
-                sh 'export PATH=$PATH:/var/lib/jenkins/.local/bin'
-
-                // Run the tests
-                sh 'pytest test_math.py --maxfail=1 --disable-warnings -q'
+                // Run the tests using the full path to pytest
+                sh '/var/lib/jenkins/.local/bin/pytest test_math.py --maxfail=1 --disable-warnings -q'
             }
         }
 
