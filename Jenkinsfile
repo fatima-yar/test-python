@@ -21,9 +21,9 @@ pipeline {
     }
 
     post {
-        success {
-            // Archive the zipped test results
-            archiveArtifacts artifacts: 'test_reports.zip', allowEmptyArchive: true
-        }
+        // success {
+        //     // Archive the zipped test results
+        //     archiveArtifacts artifacts: 'test_reports.zip', allowEmptyArchive: true
+        // }
     }
 }
