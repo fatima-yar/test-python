@@ -1,30 +1,35 @@
 pipeline {
-    agent any
+    agent any  
 
     stages {
-        stage('Install dependencies') {
+        stage('Install and Run Tests') {
             steps {
                 script {
-                    // Install dependencies, e.g., pytest, if not already installed
+                    // Install pytest
                     sh 'pip install pytest'
+
+                    // Add the directory where pytest is installed to PATH (if needed)
+                    sh 'export PATH=$PATH:/var/lib/jenkins/.local/bin'
+
+                    // Run the specific test file (test_math.py)
+                    sh 'pytest test_math.py --maxfail=1 --disable-warnings -q'
                 }
             }
         }
 
-        stage('Run tests') {
+        stage('Download and Unzip Artifact') {
             steps {
                 script {
-                    // Run pytest to execute the test
-                    sh 'pytest --maxfail=1 --disable-warnings -q'
+                    // Run the Python script to download and unzip the artifact
+                    sh 'python3 path/to/your/script.py'
                 }
             }
         }
     }
 
     post {
-        always {
-            // Clean up or perform any actions after the tests, e.g., notify on failure
-            echo 'Pipeline completed.'
+        success {
+            archiveArtifacts artifacts: '**/target/*.zip', allowEmptyArchive: true
         }
     }
 }
