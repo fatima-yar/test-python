@@ -17,12 +17,8 @@ pipeline {
                 // Create the test results directory
                 sh 'mkdir -p test_reports'
 
-                // Use tar to compress the test results instead of zip
-                sh 'tar -czf test_reports.tar.gz test_reports/'
-
-                // Convert the .tar.gz file to .zip
-                sh 'tar -xzf test_reports.tar.gz -C extracted_folder'  // Extract the tar.gz file
-                sh 'zip -r test_reports.zip extracted_folder/*'         // Compress into a zip
+                // Instead of tar, directly create the zip file from the test_reports directory
+                sh 'zip -r test_reports.zip test_reports/'
             }
         }
     }
