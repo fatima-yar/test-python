@@ -8,7 +8,10 @@ pipeline {
                 script {
                     // Install pytest
                     sh 'pip install pytest'
-                    
+
+                    // Add the directory where pytest is installed to PATH
+                    sh 'export PATH=$PATH:/var/lib/jenkins/.local/bin'
+
                     // Run tests using pytest
                     sh 'pytest --maxfail=1 --disable-warnings -q'
                 }
