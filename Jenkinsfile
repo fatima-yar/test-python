@@ -43,7 +43,7 @@ pipeline {
                 sh '. venv/bin/activate && pip install psycopg2-binary cbor2'
             }
         }
-    }
+    
 
 
 
@@ -134,4 +134,4 @@ finally:
             echo 'The pipeline failed. Check the logs for errors.'
         }
     }
-
+}
