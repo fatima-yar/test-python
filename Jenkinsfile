@@ -83,7 +83,7 @@ def insert_useless_data(folder_path, pr_number, table_name, cursor):
     file_name = txt_files[0]
     file_path = os.path.join(folder_path, file_name)
     
-    with open(file_path, 'r',encoding='utf-8' as file:
+    with open(file_path, 'r',encoding='utf-8') as file:
         file_text = file.read()
         print(file_text)  # Debug: print the XML content
         print(f"Reading file from: {file_path}")
