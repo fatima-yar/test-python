@@ -14,27 +14,24 @@ pipeline {
     stages {
         stage('Run Tests') {
             steps {
-                // Install pytest globally on the Jenkins node (no virtualenv)
                 sh 'pip install --user pytest'
-
-                // Run the tests and save results in the 'test_reports' directory
                 sh '/var/lib/jenkins/.local/bin/pytest test_math.py --maxfail=1 --disable-warnings -q --junitxml=${TEST_REPORT_PATH}'
             }
         }
 
         stage('Archive Test Results') {
             steps {
-                // Create the test reports directory (if needed)
                 sh 'mkdir -p test_reports'
-
-                // Archive the XML test results file into a ZIP archive
                 sh 'zip -r test_reports.zip test_reports/'
             }
         }
 
         stage('Setup Virtual Environment') {
             steps {
-                // Install virtualenv if it's not installed already
+                // Ensure the Jenkins user has write access
+                sh 'chmod -R 777 /var/lib/jenkins/workspace/test-python'
+
+                // Install virtualenv
                 sh 'pip install --user virtualenv'
 
                 // Create a virtual environment
@@ -48,7 +45,6 @@ pipeline {
 
     post {
         success {
-            // Archive the zip file as the test results
             archiveArtifacts artifacts: 'test_reports.zip', allowEmptyArchive: true
         }
 
