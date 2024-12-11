@@ -28,13 +28,15 @@ pipeline {
 
         stage('Setup Virtual Environment') {
             steps {
-                // Ensure the Jenkins user has write access
+                // Ensure correct permissions for the Jenkins user
+                sh 'sudo chown -R jenkins:jenkins /var/lib/jenkins/workspace/test-python'
                 sh 'chmod -R 777 /var/lib/jenkins/workspace/test-python'
 
                 // Install virtualenv
                 sh 'pip install --user virtualenv'
 
-                // Create a virtual environment
+                // Remove existing virtualenv (if any) and create a fresh one
+                sh 'rm -rf venv'
                 sh 'python3 -m venv venv'
 
                 // Activate the virtual environment and install dependencies
@@ -53,6 +55,7 @@ pipeline {
         }
     }
 }
+
 
 //         stage('Push Test Results to Database') {
 //             steps {
