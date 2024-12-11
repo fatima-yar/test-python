@@ -43,9 +43,6 @@ pipeline {
                 sh '. venv/bin/activate && pip install psycopg2-binary cbor2'
             }
         }
-    
-
-
 
         stage('Push Test Results to Database') {
             steps {
@@ -139,7 +136,6 @@ finally:
         cur.close()
     if 'conn' in locals():
         conn.close()
-
 """
                     // Execute the Python script inside the virtual environment
                     sh '. venv/bin/activate && python3 insert_pr_data.py'
