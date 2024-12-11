@@ -1,10 +1,10 @@
 pipeline {
     agent any
-     environment {
-        // Define the path where the test results will be stored
+
+    environment {
         TEST_REPORT_PATH = 'test_reports/results.xml'
         DATABASE_SCRIPT = 'insert_pr_data.py' // Python script for inserting data into the DB
-        PR_NUMBER = '229' // Example PR number, replace with actual dynamic value
+        PR_NUMBER = '123' // Example PR number, replace with actual dynamic value
         DB_HOST = 'localhost'
         DB_USER = 'postgres'
         DB_PASSWORD = 'postgres'
@@ -18,13 +18,35 @@ pipeline {
                 sh 'pip install --user pytest'
 
                 // Run the tests and save results in the 'test_reports' directory
-                sh '/var/lib/jenkins/.local/bin/pytest test_math.py --maxfail=1 --disable-warnings -q --junitxml=test_reports/results.xml'
+                sh '/var/lib/jenkins/.local/bin/pytest test_math.py --maxfail=1 --disable-warnings -q --junitxml=${TEST_REPORT_PATH}'
+            }
+        }
+
+        stage('Archive Test Results') {
+            steps {
+                // Create the test reports directory (if needed)
+                sh 'mkdir -p test_reports'
+
+                // Archive the XML test results file into a ZIP archive
+                sh 'zip -r test_reports.zip test_reports/'
+            }
+        }
+
+        stage('Setup Virtual Environment') {
+            steps {
+                // Install virtualenv if it's not installed already
+                sh 'pip install --user virtualenv'
+
+                // Create a virtual environment
+                sh 'python3 -m venv venv'
+
+                // Activate the virtual environment and install dependencies
+                sh '. venv/bin/activate && pip install psycopg2-binary cbor2'
             }
         }
 
         stage('Push Test Results to Database') {
             steps {
-                // Run the Python script to insert test result data into the database
                 script {
                     writeFile file: 'insert_pr_data.py', text: """
 import os
@@ -94,8 +116,8 @@ finally:
     if 'conn' in locals():
         conn.close()
 """
-                    // Execute the Python script to push data to the database
-                    sh 'python3 insert_pr_data.py'
+                    // Execute the Python script inside the virtual environment
+                    sh '. venv/bin/activate && python3 insert_pr_data.py'
                 }
             }
         }
@@ -112,61 +134,3 @@ finally:
         }
     }
 }
-
-// def create_tables(cursor):
-//     create_script = ''' 
-//                 CREATE TABLE IF NOT EXISTS pr (
-//                     id serial primary key,
-//                     pr_number varchar,
-//                     file_name varchar,
-//                     file_content text)
-
-//                     '''
-// def insert_useless_data(folder_path, pr_number, table_name, cursor):
-       
-//      txt_files = [f for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f)) and f.lower().endswith(('.xml'))]
-//      file_name = txt_files[0]
-//      file_path = os.path.join(folder_path, file_name)
-//      with open(file_path, 'r') as file:
-//         file_text = file.read()
-//         file_content = cbor2.dumps(file_text)
-
-//         insert_script = f'INSERT INTO {table_name} (pr_number, file_name, file_content) VALUES ( %s, %s, %s)'
-//         insert_values = (pr_number,file_name, file_content)
-//      cursor.execute(insert_script, insert_values)
-
-// try:
-//     conn=create_connection()
-//     if conn is not None:
-
-//         cur = conn.cursor()
-
-//         cur.execute('DROP TABLE IF EXISTS pr, format_c, format_python, lint_c,simulator, target, test_c, test_python') #every time it drops the table and makes a new one
-
-
-//         create_tables(cur)
-
-
-//         insert_pr_data(cur)
-
-//         #insert usless ones
-//         # insert_useless_data('<path to xml file in the pipeline>', pr_number, 'test_report', cur)
-
-
-
-
-
-
-//         conn.commit()
-
-//         print("Successfully inserted values into all tables.")
-
-
-// except Exception as error:
-//     print(f"Error: {error}")
-// finally:
-//     if cur:
-//         cur.close()
-//     if conn:
-//         conn.close()
-
