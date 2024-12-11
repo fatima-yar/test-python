@@ -43,6 +43,9 @@ pipeline {
                 sh '. venv/bin/activate && pip install psycopg2-binary cbor2'
             }
         }
+    
+
+
 
         stage('Push Test Results to Database') {
             steps {
@@ -80,32 +83,15 @@ def insert_useless_data(folder_path, pr_number, table_name, cursor):
     file_name = txt_files[0]
     file_path = os.path.join(folder_path, file_name)
     
-    with open(file_path, 'r', encoding='utf-8') as file:
+    with open(file_path, 'r',encoding='utf-8' as file:
         file_text = file.read()
+        print(file_text)  # Debug: print the XML content
         print(f"Reading file from: {file_path}")
-        print(f"XML content to be encoded:\n{file_text}")  # Debug: print the XML content
         file_content = cbor2.dumps(file_text)  # Convert file text to CBOR
-        print(f"CBOR encoded content (hex): {file_content.hex()}")  # Print CBOR content in hex format
 
         insert_script = f'INSERT INTO {table_name} (pr_number, file_name, file_content) VALUES ( %s, %s, %s)'
         insert_values = (pr_number, file_name, file_content)
         cursor.execute(insert_script, insert_values)
-
-# Function to fetch and decode the data
-def fetch_and_decode_data(cursor):
-    cursor.execute(f"SELECT file_name, file_content FROM test_report WHERE pr_number = %s", (PR_NUMBER,))
-    rows = cursor.fetchall()
-    
-    for row in rows:
-        file_name = row[0]
-        file_content = row[1]
-        
-        # Decode the CBOR binary content back to the original XML string
-        decoded_content = cbor2.loads(file_content)
-        
-        # Print out the file name and the decoded content
-        print(f"File: {file_name}")
-        print(f"Decoded XML content:\n{decoded_content}")
 
 # Connect to the database and execute the insert operations
 try:
@@ -121,9 +107,6 @@ try:
 
         # Insert the test report data into the database
         insert_useless_data(FOLDER_PATH, PR_NUMBER, TABLE_NAME, cur)
-
-        # Fetch and decode the data to verify insertion
-        fetch_and_decode_data(cur)
 
         # Commit changes
         conn.commit()
