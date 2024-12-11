@@ -44,6 +44,19 @@ pipeline {
                 sh '. venv/bin/activate && pip install psycopg2-binary cbor2'
             }
         }
+    }
+
+    post {
+        success {
+            // Archive the zip file as the test results
+            archiveArtifacts artifacts: 'test_reports.zip', allowEmptyArchive: true
+        }
+
+        failure {
+            echo 'The pipeline failed. Check the logs for errors.'
+        }
+    }
+}
 
 //         stage('Push Test Results to Database') {
 //             steps {
@@ -123,14 +136,3 @@ pipeline {
 //         }
 //     }
 
-    post {
-        success {
-            // Archive the zip file as the test results
-            archiveArtifacts artifacts: 'test_reports.zip', allowEmptyArchive: true
-        }
-
-        failure {
-            echo 'The pipeline failed. Check the logs for errors.'
-        }
-    }
-}
