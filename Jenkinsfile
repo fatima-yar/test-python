@@ -69,7 +69,7 @@ TABLE_NAME = "test_report"
 # Function to create database table if it doesn't exist
 def create_tables(cursor):
     create_script = ''' 
-    CREATE TABLE IF NOT EXISTS pr (
+    CREATE TABLE IF NOT EXISTS testfile (
         id serial primary key,
         pr_number varchar,
         file_name varchar,
