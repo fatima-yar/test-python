@@ -29,7 +29,7 @@ pipeline {
         stage('Setup Virtual Environment') {
             steps {
                 // Ensure correct permissions for the Jenkins user
-                sh 'sudo chown -R jenkins:jenkins /var/lib/jenkins/workspace/test-python'
+                sh 'chown -R jenkins:jenkins /var/lib/jenkins/workspace/test-python'
                 sh 'chmod -R 777 /var/lib/jenkins/workspace/test-python'
 
                 // Install virtualenv
