@@ -134,4 +134,4 @@ finally:
             echo 'The pipeline failed. Check the logs for errors.'
         }
     }
-}
+
