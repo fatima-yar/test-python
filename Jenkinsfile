@@ -34,11 +34,11 @@ pipeline {
 
         stage('Setup Virtual Environment') {
             steps {
-                // Install virtualenv if it's not installed already
-                sh 'pip install --user virtualenv'
+                // // Install virtualenv if it's not installed already
+                // sh 'pip install --user virtualenv'
 
-                // Create a virtual environment
-                sh 'python3 -m venv venv'
+                // // Create a virtual environment
+                // sh 'python3 -m venv venv'
 
                 // Activate the virtual environment and install dependencies
                 sh '. venv/bin/activate && pip install psycopg2-binary cbor2'
