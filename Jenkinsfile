@@ -12,6 +12,32 @@ pipeline {
     }
 
     stages {
+ stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Debug Workspace') {
+            steps {
+                script {
+                    sh 'ls -al ${WORKSPACE}'  // To check the contents of the workspace
+                }
+            }
+        }
+        stage('Create Database Connection and Tables') {
+            steps {
+                script {
+                    echo "Connecting to database and creating tables..."
+                    def command = "python3 ${WORKSPACE}/database_functions.py create_tables"
+                    try {
+                        sh command
+                    } catch (Exception e) {
+                        echo "Error creating connection and tables: ${e.message}"
+                    }
+                }
+            }
+        }
         stage('Create Database Connection and Tables') {
             steps {
                 script {
