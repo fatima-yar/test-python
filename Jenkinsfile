@@ -12,6 +12,15 @@ pipeline {
     }
 
     stages {
+        stage('Check Working Directory') {
+    steps {
+        script {
+            def process = "ls -l".execute()
+            process.waitFor()
+            echo process.in.text
+        }
+    }
+}
         stage('Create Database Connection and Tables') {
             steps {
                 script {
