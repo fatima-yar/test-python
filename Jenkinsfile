@@ -12,7 +12,6 @@ pipeline {
     }
 
     stages {
- stages {
         stage('Checkout') {
             steps {
                 checkout scm
@@ -38,26 +37,6 @@ pipeline {
                 }
             }
         }
-        stage('Create Database Connection and Tables') {
-            steps {
-                script {
-                    // Call Python script to create the connection and tables
-                    echo 'Connecting to database and creating tables...'
-                    def command = "python3 ${WORKSPACE}/database_functions.py create_tables"
-                    def process = command.execute()
-                    process.waitFor()
-                    def output = process.in.text
-                    def error = process.err.text
-
-                    if (error) {
-                        error("Error creating connection and tables: ${error}")
-                    } else {
-                        echo "Tables created successfully: ${output}"
-                    }
-                }
-            }
-        }
-
         stage('Insert Data into test_c') {
             steps {
                 script {
@@ -78,7 +57,6 @@ pipeline {
                 }
             }
         }
-
         stage('Insert Data into test_python') {
             steps {
                 script {
@@ -99,7 +77,6 @@ pipeline {
                 }
             }
         }
-
         stage('Finish') {
             steps {
                 script {
