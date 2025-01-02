@@ -18,20 +18,11 @@ pipeline {
             }
         }
 
-        stage('Debug Workspace') {
-            steps {
-                script {
-                    // Debugging workspace contents
-                    sh 'echo "Workspace directory: ${WORKSPACE}"'
-                    sh 'ls -al ${WORKSPACE}'
-                }
-            }
-        }
-
         stage('Create Database Connection and Tables') {
             steps {
                 script {
                     echo "Connecting to database and creating tables..."
+                    // Command to create tables
                     def command = "python3 ${WORKSPACE}/database_functions.py create_tables"
                     try {
                         sh command
@@ -49,6 +40,7 @@ pipeline {
                 script {
                     def test_c_Directory = "../test-python/output/test_c"
                     echo 'Inserting data into test_c...'
+                    // Command to insert data into test_c table
                     def command = """python3 ${WORKSPACE}/database_functions.py insert_into_test_c_and_test_python_table ${test_c_Directory} ${env.PR_NUMBER} ${env.CREATED_AT} 'test_c'"""
                     try {
                         sh command
@@ -66,6 +58,7 @@ pipeline {
                 script {
                     def test_python_Directory = "../test-python/output/test_python"
                     echo 'Inserting data into test_python...'
+                    // Command to insert data into test_python table
                     def command = """python3 ${WORKSPACE}/database_functions.py insert_into_test_c_and_test_python_table ${test_python_Directory} ${env.PR_NUMBER} ${env.CREATED_AT} 'test_python'"""
                     try {
                         sh command
@@ -80,9 +73,7 @@ pipeline {
 
         stage('Finish') {
             steps {
-                script {
-                    echo "Successfully inserted values into all tables."
-                }
+                echo "Successfully inserted values into test_c and test_python tables."
             }
         }
     }
