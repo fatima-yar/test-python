@@ -17,7 +17,7 @@ pipeline {
                 script {
                     // Call Python script to create the connection and tables
                     echo 'Connecting to database and creating tables...'
-                    def command = "python3 database_functions.py create_tables"
+                    def command = "python3 ${WORKSPACE}/database_functions.py create_tables"
                     def process = command.execute()
                     process.waitFor()
                     def output = process.in.text
