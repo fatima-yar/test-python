@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="ati_notify_flags_test_group" tests="2" time="0.000" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="ati_notify_flags_test_group" name="ati_notify_flags_bit31" assertions="6" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_notify_flags_tests/ati_notify_tests.cpp" line="41">
+</testcase>
+<testcase classname="ati_notify_flags_test_group" name="ati_notify_flags_bit0" assertions="6" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_notify_flags_tests/ati_notify_tests.cpp" line="24">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

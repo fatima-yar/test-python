@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="ati_initialisation_test_group" tests="1" time="0.001" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="ati_initialisation_test_group" name="ati_initialisation" assertions="6" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_initialisation_tests/ati_initialisation_tests.cpp" line="27">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="application_mode_shutdown_pending_test_group" tests="7" time="0.002" timestamp="2024-11-18T11:25:10">
+<properties>
+</properties>
+<testcase classname="application_mode_shutdown_pending_test_group" name="keep_application_powered" assertions="31" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/app/application_mode_tests/application_mode_tests.cpp" line="471">
+</testcase>
+<testcase classname="application_mode_shutdown_pending_test_group" name="event_log_empty" assertions="39" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/app/application_mode_tests/application_mode_tests.cpp" line="461">
+</testcase>
+<testcase classname="application_mode_shutdown_pending_test_group" name="over_temperature_exit_shutdown_ignition_off" assertions="46" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/app/application_mode_tests/application_mode_tests.cpp" line="450">
+</testcase>
+<testcase classname="application_mode_shutdown_pending_test_group" name="over_temperature_exit_shutdown_ignition_on" assertions="46" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/app/application_mode_tests/application_mode_tests.cpp" line="439">
+</testcase>
+<testcase classname="application_mode_shutdown_pending_test_group" name="over_temperature_enter_shutdown" assertions="44" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/app/application_mode_tests/application_mode_tests.cpp" line="428">
+</testcase>
+<testcase classname="application_mode_shutdown_pending_test_group" name="ignition_off" assertions="41" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/app/application_mode_tests/application_mode_tests.cpp" line="417">
+</testcase>
+<testcase classname="application_mode_shutdown_pending_test_group" name="ignition_on" assertions="35" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/app/application_mode_tests/application_mode_tests.cpp" line="407">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

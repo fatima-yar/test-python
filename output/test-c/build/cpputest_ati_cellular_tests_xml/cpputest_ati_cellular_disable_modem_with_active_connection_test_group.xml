@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="ati_cellular_disable_modem_with_active_connection_test_group" tests="2" time="0.002" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="ati_cellular_disable_modem_with_active_connection_test_group" name="shutdown_initiated_when_connected" assertions="197" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_tests.cpp" line="491">
+</testcase>
+<testcase classname="ati_cellular_disable_modem_with_active_connection_test_group" name="user_disconnect_test" assertions="178" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_tests.cpp" line="470">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

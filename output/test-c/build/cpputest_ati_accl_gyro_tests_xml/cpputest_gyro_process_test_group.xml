@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="gyro_process_test_group" tests="5" time="0.000" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="gyro_process_test_group" name="enable_gyro_data_bump_is_already_enabled" assertions="44" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="1052">
+</testcase>
+<testcase classname="gyro_process_test_group" name="enable_gyro_data_bump_is_already_enabled_initial_setting_failed" assertions="40" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="1039">
+</testcase>
+<testcase classname="gyro_process_test_group" name="gyro_disable_all_fail" assertions="41" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="1024">
+</testcase>
+<testcase classname="gyro_process_test_group" name="gyro_data_event" assertions="41" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="1009">
+</testcase>
+<testcase classname="gyro_process_test_group" name="gyro_data_event_without_callback" assertions="35" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="998">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="accl_gyro_test_group" tests="4" time="0.001" timestamp="2024-11-18T11:25:11">
+<properties>
+</properties>
+<testcase classname="accl_gyro_test_group" name="enable_and_disable" assertions="444" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/app/dynamics/accl_gyro_tests/accl_gyro_tests.cpp" line="119">
+</testcase>
+<testcase classname="accl_gyro_test_group" name="changing_average" assertions="219" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/app/dynamics/accl_gyro_tests/accl_gyro_tests.cpp" line="98">
+</testcase>
+<testcase classname="accl_gyro_test_group" name="basic_average_test" assertions="219" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/app/dynamics/accl_gyro_tests/accl_gyro_tests.cpp" line="84">
+</testcase>
+<testcase classname="accl_gyro_test_group" name="no_data_initially_available" assertions="3" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/app/dynamics/accl_gyro_tests/accl_gyro_tests.cpp" line="79">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

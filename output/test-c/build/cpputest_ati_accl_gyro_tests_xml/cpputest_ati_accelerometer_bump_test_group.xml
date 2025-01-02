@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="ati_accelerometer_bump_test_group" tests="15" time="0.017" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="ati_accelerometer_bump_test_group" name="enabling_and_disabling_accelerometer_when_bump_is_enabled" assertions="210" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="625">
+</testcase>
+<testcase classname="ati_accelerometer_bump_test_group" name="disable_bump_also_applies_on_next_expect_calls_for_enable_accelerometer" assertions="127" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="607">
+</testcase>
+<testcase classname="ati_accelerometer_bump_test_group" name="disable_bump_when_device_sleep_failed" assertions="93" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="596">
+</testcase>
+<testcase classname="ati_accelerometer_bump_test_group" name="disable_bump_will_not_power_down_accelerometer_when_device_sleep" assertions="106" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="586">
+</testcase>
+<testcase classname="ati_accelerometer_bump_test_group" name="enable_bump_after_power_down_but_fail_to_expect_calls_for_enable_accelerometer" assertions="78" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="575">
+</testcase>
+<testcase classname="ati_accelerometer_bump_test_group" name="enable_bump_after_power_down" assertions="83" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="569">
+</testcase>
+<testcase classname="ati_accelerometer_bump_test_group" name="enable_bump_when_bump_is_already_enabled" assertions="42" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="563">
+</testcase>
+<testcase classname="ati_accelerometer_bump_test_group" name="enable_bump_when_gyro_data_is_already_enabled_and_set_bump_as_wakeup_fails" assertions="75" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="546">
+</testcase>
+<testcase classname="ati_accelerometer_bump_test_group" name="enable_bump_when_accelerometer_data_is_already_enabled" assertions="75" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="529">
+</testcase>
+<testcase classname="ati_accelerometer_bump_test_group" name="enable_bump_register_configuration_failed_repeated_attempts" assertions="57" time="0.013" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="518">
+</testcase>
+<testcase classname="ati_accelerometer_bump_test_group" name="enable_bump_failed_on_function_call" assertions="56" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="508">
+</testcase>
+<testcase classname="ati_accelerometer_bump_test_group" name="enable_bump_success_on_function_call" assertions="57" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="498">
+</testcase>
+<testcase classname="ati_accelerometer_bump_test_group" name="attempt_to_disable_accelerometer_when_set_as_wake_up" assertions="75" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="481">
+</testcase>
+<testcase classname="ati_accelerometer_bump_test_group" name="normal_run" assertions="130" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="445">
+</testcase>
+<testcase classname="ati_accelerometer_bump_test_group" name="accept_bump_data_after_first_second" assertions="64" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="423">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

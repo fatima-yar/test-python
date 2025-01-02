@@ -1,0 +1,3236 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Test Report</title>
+    <link href="assets/style.css" rel="stylesheet" type="text/css"/></head>
+  <body onLoad="init()">
+    <script>/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this file,
+ * You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+
+function toArray(iter) {
+    if (iter === null) {
+        return null;
+    }
+    return Array.prototype.slice.call(iter);
+}
+
+function find(selector, elem) {
+    if (!elem) {
+        elem = document;
+    }
+    return elem.querySelector(selector);
+}
+
+function find_all(selector, elem) {
+    if (!elem) {
+        elem = document;
+    }
+    return toArray(elem.querySelectorAll(selector));
+}
+
+function sort_column(elem) {
+    toggle_sort_states(elem);
+    var colIndex = toArray(elem.parentNode.childNodes).indexOf(elem);
+    var key;
+    if (elem.classList.contains('numeric')) {
+        key = key_num;
+    } else if (elem.classList.contains('result')) {
+        key = key_result;
+    } else {
+        key = key_alpha;
+    }
+    sort_table(elem, key(colIndex));
+}
+
+function show_all_extras() {
+    find_all('.col-result').forEach(show_extras);
+}
+
+function hide_all_extras() {
+    find_all('.col-result').forEach(hide_extras);
+}
+
+function show_extras(colresult_elem) {
+    var extras = colresult_elem.parentNode.nextElementSibling;
+    var expandcollapse = colresult_elem.firstElementChild;
+    extras.classList.remove("collapsed");
+    expandcollapse.classList.remove("expander");
+    expandcollapse.classList.add("collapser");
+}
+
+function hide_extras(colresult_elem) {
+    var extras = colresult_elem.parentNode.nextElementSibling;
+    var expandcollapse = colresult_elem.firstElementChild;
+    extras.classList.add("collapsed");
+    expandcollapse.classList.remove("collapser");
+    expandcollapse.classList.add("expander");
+}
+
+function show_filters() {
+    var filter_items = document.getElementsByClassName('filter');
+    for (var i = 0; i < filter_items.length; i++)
+        filter_items[i].hidden = false;
+}
+
+function add_collapse() {
+    // Add links for show/hide all
+    var resulttable = find('table#results-table');
+    var showhideall = document.createElement("p");
+    showhideall.innerHTML = '<a href="javascript:show_all_extras()">Show all details</a> / ' +
+                            '<a href="javascript:hide_all_extras()">Hide all details</a>';
+    resulttable.parentElement.insertBefore(showhideall, resulttable);
+
+    // Add show/hide link to each result
+    find_all('.col-result').forEach(function(elem) {
+        var collapsed = get_query_parameter('collapsed') || 'Passed';
+        var extras = elem.parentNode.nextElementSibling;
+        var expandcollapse = document.createElement("span");
+        if (extras.classList.contains("collapsed")) {
+            expandcollapse.classList.add("expander")
+        } else if (collapsed.includes(elem.innerHTML)) {
+            extras.classList.add("collapsed");
+            expandcollapse.classList.add("expander");
+        } else {
+            expandcollapse.classList.add("collapser");
+        }
+        elem.appendChild(expandcollapse);
+
+        elem.addEventListener("click", function(event) {
+            if (event.currentTarget.parentNode.nextElementSibling.classList.contains("collapsed")) {
+                show_extras(event.currentTarget);
+            } else {
+                hide_extras(event.currentTarget);
+            }
+        });
+    })
+}
+
+function get_query_parameter(name) {
+    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+}
+
+function init () {
+    reset_sort_headers();
+
+    add_collapse();
+
+    show_filters();
+
+    sort_column(find('.initial-sort'));
+
+    find_all('.sortable').forEach(function(elem) {
+        elem.addEventListener("click",
+                              function(event) {
+                                  sort_column(elem);
+                              }, false)
+    });
+
+};
+
+function sort_table(clicked, key_func) {
+    var rows = find_all('.results-table-row');
+    var reversed = !clicked.classList.contains('asc');
+    var sorted_rows = sort(rows, key_func, reversed);
+    /* Whole table is removed here because browsers acts much slower
+     * when appending existing elements.
+     */
+    var thead = document.getElementById("results-table-head");
+    document.getElementById('results-table').remove();
+    var parent = document.createElement("table");
+    parent.id = "results-table";
+    parent.appendChild(thead);
+    sorted_rows.forEach(function(elem) {
+        parent.appendChild(elem);
+    });
+    document.getElementsByTagName("BODY")[0].appendChild(parent);
+}
+
+function sort(items, key_func, reversed) {
+    var sort_array = items.map(function(item, i) {
+        return [key_func(item), i];
+    });
+
+    sort_array.sort(function(a, b) {
+        var key_a = a[0];
+        var key_b = b[0];
+
+        if (key_a == key_b) return 0;
+
+        if (reversed) {
+            return (key_a < key_b ? 1 : -1);
+        } else {
+            return (key_a > key_b ? 1 : -1);
+        }
+    });
+
+    return sort_array.map(function(item) {
+        var index = item[1];
+        return items[index];
+    });
+}
+
+function key_alpha(col_index) {
+    return function(elem) {
+        return elem.childNodes[1].childNodes[col_index].firstChild.data.toLowerCase();
+    };
+}
+
+function key_num(col_index) {
+    return function(elem) {
+        return parseFloat(elem.childNodes[1].childNodes[col_index].firstChild.data);
+    };
+}
+
+function key_result(col_index) {
+    return function(elem) {
+        var strings = ['Error', 'Failed', 'Rerun', 'XFailed', 'XPassed',
+                       'Skipped', 'Passed'];
+        return strings.indexOf(elem.childNodes[1].childNodes[col_index].firstChild.data);
+    };
+}
+
+function reset_sort_headers() {
+    find_all('.sort-icon').forEach(function(elem) {
+        elem.parentNode.removeChild(elem);
+    });
+    find_all('.sortable').forEach(function(elem) {
+        var icon = document.createElement("div");
+        icon.className = "sort-icon";
+        icon.textContent = "vvv";
+        elem.insertBefore(icon, elem.firstChild);
+        elem.classList.remove("desc", "active");
+        elem.classList.add("asc", "inactive");
+    });
+}
+
+function toggle_sort_states(elem) {
+    //if active, toggle between asc and desc
+    if (elem.classList.contains('active')) {
+        elem.classList.toggle('asc');
+        elem.classList.toggle('desc');
+    }
+
+    //if inactive, reset all other functions and add ascending active
+    if (elem.classList.contains('inactive')) {
+        reset_sort_headers();
+        elem.classList.remove('inactive');
+        elem.classList.add('active');
+    }
+}
+
+function is_all_rows_hidden(value) {
+  return value.hidden == false;
+}
+
+function filter_table(elem) {
+    var outcome_att = "data-test-result";
+    var outcome = elem.getAttribute(outcome_att);
+    class_outcome = outcome + " results-table-row";
+    var outcome_rows = document.getElementsByClassName(class_outcome);
+
+    for(var i = 0; i < outcome_rows.length; i++){
+        outcome_rows[i].hidden = !elem.checked;
+    }
+
+    var rows = find_all('.results-table-row').filter(is_all_rows_hidden);
+    var all_rows_hidden = rows.length == 0 ? true : false;
+    var not_found_message = document.getElementById("not-found-message");
+    not_found_message.hidden = !all_rows_hidden;
+}
+</script>
+    <h1>pytest.html</h1>
+    <p>Report generated on 18-Nov-2024 at 11:18:39 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v2.1.1</p>
+    <h2>Environment</h2>
+    <table id="environment">
+      <tr>
+        <td>BUILD_ID</td>
+        <td>18</td></tr>
+      <tr>
+        <td>BUILD_NUMBER</td>
+        <td>18</td></tr>
+      <tr>
+        <td>BUILD_TAG</td>
+        <td>jenkins-STATIC_CHECK-PR-2284-18</td></tr>
+      <tr>
+        <td>BUILD_URL</td>
+        <td><a href="http://10.113.130.232:8080/job/STATIC_CHECK/job/PR-2284/18/" target="_blank">http://10.113.130.232:8080/job/STATIC_CHECK/job/PR-2284/18/</a></td></tr>
+      <tr>
+        <td>CI</td>
+        <td>true</td></tr>
+      <tr>
+        <td>EXECUTOR_NUMBER</td>
+        <td>0</td></tr>
+      <tr>
+        <td>GIT_BRANCH</td>
+        <td>PR-2284</td></tr>
+      <tr>
+        <td>GIT_COMMIT</td>
+        <td>bf21075495dee81662aef02de69c680009b44caf</td></tr>
+      <tr>
+        <td>GIT_URL</td>
+        <td><a href="https://bitbucket.org/transtech/hermes.git" target="_blank">https://bitbucket.org/transtech/hermes.git</a></td></tr>
+      <tr>
+        <td>JENKINS_URL</td>
+        <td><a href="http://10.113.130.232:8080/" target="_blank">http://10.113.130.232:8080/</a></td></tr>
+      <tr>
+        <td>JOB_NAME</td>
+        <td>STATIC_CHECK/PR-2284</td></tr>
+      <tr>
+        <td>NODE_NAME</td>
+        <td>vm_i3_04_01</td></tr>
+      <tr>
+        <td>Packages</td>
+        <td>{"pluggy": "0.13.0", "py": "1.9.0", "pytest": "5.4.2"}</td></tr>
+      <tr>
+        <td>Platform</td>
+        <td>Linux-5.4.0-150-generic-x86_64-with-Ubuntu-18.04-bionic</td></tr>
+      <tr>
+        <td>Plugins</td>
+        <td>{"cov": "2.8.1", "dash": "1.14.0", "forked": "1.1.3", "html": "2.1.1", "metadata": "1.8.0", "xdist": "1.32.0"}</td></tr>
+      <tr>
+        <td>Python</td>
+        <td>3.6.9</td></tr>
+      <tr>
+        <td>WORKSPACE</td>
+        <td>/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284</td></tr></table>
+    <h2>Summary</h2>
+    <p>301 tests ran in 42.79 seconds. </p>
+    <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="passed">301 passed</span>, <input checked="true" class="filter" data-test-result="skipped" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="skipped">0 skipped</span>, <input checked="true" class="filter" data-test-result="failed" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="failed">0 failed</span>, <input checked="true" class="filter" data-test-result="error" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="error">0 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
+    <h2>Results</h2>
+    <table id="results-table">
+      <thead id="results-table-head">
+        <tr>
+          <th class="sortable result initial-sort" col="result">Result</th>
+          <th class="sortable" col="name">Test</th>
+          <th class="sortable numeric" col="duration">Duration</th>
+          <th>Links</th></tr>
+        <tr hidden="true" id="not-found-message">
+          <th colspan="4">No results found. Try to check the filters</th></tr></thead>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/bit_array/unittest/test_bit_array_conversion.py::TestBitArrayConversion::test_unsigned_integer_conversion</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/bit_array/unittest/test_bit_array_conversion.py::TestBitArrayConversion::test_float_conversion</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/time_series_compression/unittest/test_time_series_compression.py::TestTimeSeriesCompression::test_invalid_decode</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/time_series_compression/unittest/test_time_series_compression.py::TestTimeSeriesCompression::test_invalid_encode</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/bit_array/unittest/test_bit_array_conversion.py::TestBitArrayConversion::test_integer_conversion</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/time_series_compression/unittest/test_time_series_compression.py::TestTimeSeriesCompression::test_equal_entries</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/time_series_compression/unittest/test_time_series_compression.py::TestTimeSeriesCompression::test_encode_single_item</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/time_series_compression/unittest/test_time_series_compression.py::TestTimeSeriesCompression::test_engine_data</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/time_series_compression/unittest/test_time_series_compression.py::TestTimeSeriesCompression::test_ev_data</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/time_series_compression2/unittest/test_time_series_compression2.py::TestTimeSeriesCompression::test_invalid_decode</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/time_series_compression2/unittest/test_time_series_compression2.py::TestTimeSeriesCompression::test_invalid_encode</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/time_series_compression2/unittest/test_time_series_compression2.py::TestTimeSeriesCompression::test_ev_data</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/time_series_compression2/unittest/test_time_series_compression2.py::TestTimeSeriesCompression::test_encode_single_item</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/time_series_compression2/unittest/test_time_series_compression2.py::TestTimeSeriesCompression::test_engine_data</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/time_series_compression/unittest/test_time_series_compression.py::TestTimeSeriesCompression::test_varied</td>
+          <td class="col-duration">0.02</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/time_series_compression2/unittest/test_time_series_compression2.py::TestTimeSeriesCompression::test_varied</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/time_series_compression2/unittest/test_time_series_compression2.py::TestTimeSeriesCompression::test_equal_entries</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/time_series_compression2/unittest/test_time_series_compression2.py::TestTimeSeriesCompression::test_all_fields</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_advanced_sleep.py::TestAdvancedSleep::test_sleep_limited_to_end</td>
+          <td class="col-duration">0.50</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_advanced_sleep.py::TestAdvancedSleep::test_sleep_limited</td>
+          <td class="col-duration">0.50</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_breadcrumb.py::TestBreadcrumb::test_decode</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_breadcrumb.py::TestBreadcrumb::test_negative_decode</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_correlation.py::TestCorrelation::test_repeat_correlation</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_correlation.py::TestCorrelation::test_null_correlation</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_geography.py::TestGeography::test_distance_travelled</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_geography.py::TestGeography::test_distance_to_arc</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_gnss_path_comparison.py::TestPathComparison::test_points</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_print_format.py::TestPrintFormat::test_foreground</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_print_format.py::TestPrintFormat::test_case</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_sequence_generator.py::TestSequenceGenerator::test_generate_sequence</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_singleton.py::TestSingleton::test_singleton_creation_instance_only_with_parameters</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_singleton.py::TestSingleton::test_singleton_destroy</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_type_fields.py::TestTypeFields::test_serialise_big_endian</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/comms/unittest/test_forwarding_server_tcp_client.py::TestForwardingServerTcpClient::test_send_before_setting_routing_key</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/comms/unittest/test_forwarding_server_tcp_client.py::TestForwardingServerTcpClient::test_receive_unsupported_command_address</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_gnss_path_comparison.py::TestPathComparison::test_breadcrumbs</td>
+          <td class="col-duration">0.04</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_print_format.py::TestPrintFormat::test_no_parameters</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/comms/unittest/test_serial_port.py::TestSerialPort::test_send</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_print_format.py::TestPrintFormat::test_combination</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_sequence_generator.py::TestSequenceGenerator::test_seed</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_singleton.py::TestSingleton::test_singleton_creation</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_singleton.py::TestSingleton::test_singleton_second_init_no_parameters</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_type_fields.py::TestTypeFields::test_serialise_little_endian</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/comms/unittest/test_forwarding_server_tcp_client.py::TestForwardingServerTcpClient::test_init_and_close</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/comms/unittest/test_forwarding_server_tcp_client.py::TestForwardingServerTcpClient::test_receive_from_invalid_address</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/comms/unittest/test_serial_port.py::TestSerialPort::test_init_close</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/devices/unittest/test_daq.py::TestDaq::test_daq_relay</td>
+          <td class="col-duration">0.02</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/control/unittest/test_ignition_control.py::TestIgnitionControl::test_ignition_off</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/control/unittest/test_ignition_control.py::TestIgnitionControl::test_ignition_tamper</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/control/unittest/test_ignition_control_simulated.py::TestIgnitionControl::test_ignition_on</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/control/unittest/test_ignition_control_simulated.py::TestIgnitionControl::test_ignition_off</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/control/unittest/test_ignition_control_simulated.py::TestIgnitionControl::test_ignition_tamper</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/devices/unittest/test_daq.py::TestDaq::test_daq_gpio</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/devices/unittest/test_daq.py::TestDaq::test_daq_dac</td>
+          <td class="col-duration">0.04</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/devices/unittest/test_daq.py::TestDaq::test_daq_adc</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_advanced_sleep.py::TestAdvancedSleep::test_periodic_sleep</td>
+          <td class="col-duration">1.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_correlation.py::TestCorrelation::test_basic_cross_correlation</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_geofence.py::TestGeofence::test_smdp_configuration_encode</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_git.py::TestGit::test_get_status_var1</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/devices/unittest/test_digital_multimeter.py::TestDigitalMultimeter::test_digital_multimeter_supply_init_and_close</td>
+          <td class="col-duration">0.05</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_json_helper.py::TestTypeFields::test_json_converter</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_print_format.py::TestPrintFormat::test_background</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_print_format.py::TestPrintFormat::test_invalid_options</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_advanced_sleep.py::TestAdvancedSleep::test_periodic_sleep_until</td>
+          <td class="col-duration">1.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_correlation.py::TestCorrelation::test_approximate_correlation</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_geofence.py::TestGeofence::test_smdp_query_response_decode</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_git.py::TestGit::test_get_status_var2</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_make_version.py::TestMakeVersion::test_get_file_version_string</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_print_format.py::TestPrintFormat::test_style</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/devices/unittest/test_digital_multimeter.py::TestDigitalMultimeter::test_digital_multimeter_current_channel</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/devices/unittest/test_digital_multimeter.py::TestDigitalMultimeter::test_digital_multimeter_voltage_channel</td>
+          <td class="col-duration">0.10</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_sequence_generator.py::TestSequenceGenerator::test_generate_float</td>
+          <td class="col-duration">0.23</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_singleton.py::TestSingleton::test_singleton_creation_instance_only</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_singleton.py::TestSingleton::test_singleton_inheritance</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_type_fields.py::TestTypeFields::test_deserialise_little_endian</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/comms/unittest/test_forwarding_server_tcp_client.py::TestForwardingServerTcpClient::test_send_wrapped_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/devices/unittest/test_digital_multimeter.py::TestDigitalMultimeter::test_digital_multimeter_functions</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/comms/unittest/test_mqtt_client.py::TestMqttClient::test_init_close</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/devices/unittest/test_jtag.py::TestJtag::test_program</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/devices/unittest/test_named_channel.py::TestNamedChannel::test_get_named_channel</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/devices/unittest/test_power_supply.py::TestPowerSupply::test_power_supply_init_and_close</td>
+          <td class="col-duration">0.13</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/devices/unittest/test_power_supply.py::TestPowerSupply::test_power_supply_channel</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/devices/unittest/test_power_supply.py::TestPowerSupply::test_power_supply_channel_mapping</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/devices/unittest/test_power_supply.py::TestPowerSupply::test_power_supply_functions</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/iap_records/unittest/test_speed_record.py::TestSpeedRecord::test_packet_from_bytes</td>
+          <td class="col-duration">0.02</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/iap_records/unittest/test_speed_record.py::TestSpeedRecord::test_packet_from_invalid_bytes</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/comms/unittest/test_serial_port.py::TestSerialPort::test_receive</td>
+          <td class="col-duration">0.80</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/forwarding_server/unittest/test_forwarding_server.py::TestForwardingServer::test_routing_table_cleanup</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/forwarding_server/unittest/test_forwarding_server.py::TestForwardingServer::test_multiple_routing_tables</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/forwarding_server/unittest/test_forwarding_server.py::TestForwardingServer::test_routing_table_target_update</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/forwarding_server/unittest/test_forwarding_server.py::TestForwardingServer::test_iap_forwarding</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/forwarding_server/unittest/test_forwarding_server.py::TestForwardingServer::test_iap_no_initial_packet_with_ivu_id</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/forwarding_server/unittest/test_forwarding_server.py::TestForwardingServer::test_edr1_forwarding</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/forwarding_server/unittest/test_forwarding_server.py::TestForwardingServer::test_edr1_no_initial_packet_with_imei</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/forwarding_server/unittest/test_forwarding_server.py::TestForwardingServer::test_tachosys_forwarding</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/forwarding_server/unittest/test_forwarding_server.py::TestForwardingServer::test_tachosys_no_d9_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/edr1/unittest/test_edr1_server_protocol.py::TestEdr1Protocol::test_send</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/edr1/unittest/test_edr1_server_protocol.py::TestEdr1Protocol::test_receive</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/unittest/test_adm_packet.py::TestAdmPacket::test_packet_fields</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/edr1/unittest/test_edr1_server_protocol.py::TestEdr1Protocol::test_receive_buffer</td>
+          <td class="col-duration">0.05</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/iap_records/unittest/test_alarm_record.py::TestAlarmRecord::test_packet_fields</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/unittest/test_vt_packet.py::TestVtPacket::test_packet_from_invalid_bytes</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/unittest/test_adm_packet.py::TestAdmPacket::test_packet_from_bytes</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/unittest/test_adm_packet.py::TestAdmPacket::test_packet_from_invalid_bytes</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/unittest/test_iap_protocol.py::TestIapProtocol::test_receive_callback_registered</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/unittest/test_iap_protocol.py::TestIapProtocol::test_receive_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/unittest/test_iap_packet.py::TestIapPacket::test_packet_fields</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/unittest/test_iap_packet.py::TestIapPacket::test_packet_from_bytes</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/unittest/test_iap_packet.py::TestIapPacket::test_packet_from_invalid_bytes</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/control/unittest/test_target_environment_simulated.py::TestTargetEnvironmentSimulated::test_playback</td>
+          <td class="col-duration">2.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/unittest/test_vt_packet.py::TestGnssSubPacket::test_packet_fields</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/unittest/test_vt_packet.py::TestVtPacket::test_packet_fields</td>
+          <td class="col-duration">0.02</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/unittest/test_vt_packet.py::TestVtPacket::test_packet_from_bytes</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/unittest/test_iap_protocol.py::TestIapProtocol::test_send_raw_packet</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/unittest/test_iap_protocol.py::TestIapProtocol::test_send_raw_empty_packet</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/unittest/test_iap_protocol.py::TestIapProtocol::test_receive_stream</td>
+          <td class="col-duration">1.11</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/unittest/test_iap_protocol.py::TestIapProtocol::test_receive_multiple_stream</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_scheduler.py::TestScheduler::test_scheduler</td>
+          <td class="col-duration">2.25</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>Testing monitor 1 Called: True Call time: 1731881882.651988 Var1: 1 Var2: 2 Var3: 3...
+Testing monitor 2 Called: True Call time: 1731881883.1520085 Var1: 4 Var2: 5 Var3: 0...
+Testing monitor 3 Called: True Call time: 1731881883.6520686 Var1: 6 Var2: 7 Var3: 8...
+Testing monitor 4 Called: True Call time: 1731881884.1519442 Var1: 9 Var2: 10 Var3: 1...
+Testing monitor 5 Called: True Call time: 1731881884.6519365 Var1: 11 Var2: 12 Var3: 2...
+<br/></div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_sequence_generator.py::TestSequenceGenerator::test_generate_int</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_singleton.py::TestSingleton::test_singleton_second_init_parameters</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_stdout_logger.py::TestStdoutLogger::test_stdout_logger</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/unittest/test_iap_protocol.py::TestIapProtocol::test_send_different_formats</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/common/unittest/test_type_fields.py::TestTypeFields::test_deserialise_big_endian</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/comms/unittest/test_forwarding_server_tcp_client.py::TestForwardingServerTcpClient::test_receive_wrapped_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/comms/unittest/test_mqtt_client.py::TestMqttClient::test_send_receive</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/control/unittest/test_ignition_control.py::TestIgnitionControl::test_ignition_on</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/iap_records/unittest/test_alarm_record.py::TestAlarmRecord::test_packet_from_bytes</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/iap_records/unittest/test_alarm_record.py::TestAlarmRecord::test_packet_from_invalid_bytes</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/iap_records/unittest/test_communication_record.py::TestCommunicationRecord::test_packet_fields</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/iap_records/unittest/test_communication_record.py::TestCommunicationRecord::test_packet_from_bytes</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/iap_records/unittest/test_communication_record.py::TestCommunicationRecord::test_packet_from_invalid_bytes</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/iap_records/unittest/test_position_record.py::TestPositionRecord::test_packet_fields</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/iap_records/unittest/test_position_record.py::TestPositionRecord::test_packet_from_bytes</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/iap_records/unittest/test_position_record.py::TestPositionRecord::test_packet_from_invalid_bytes</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/iap_records/unittest/test_speed_event_record.py::TestSpeedEventRecord::test_packet_fields</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/iap_records/unittest/test_speed_event_record.py::TestSpeedEventRecord::test_packet_from_bytes</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/iap_records/unittest/test_speed_event_record.py::TestSpeedEventRecord::test_packet_from_invalid_bytes</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/packets/iap_records/unittest/test_speed_record.py::TestSpeedRecord::test_packet_fields</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/unittest/test_iap_protocol.py::TestIapProtocol::test_receive_ignore_duplicate</td>
+          <td class="col-duration">0.10</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/unittest/test_iap_protocol.py::TestIapProtocol::test_receive_garbage_stream</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/unittest/test_iap_protocol.py::TestIapProtocol::test_receive_stream_with_start_packet_chars</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/unittest/test_iap_protocol.py::TestIapProtocol::test_send_with_auto_line_termination</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/unittest/test_iap_protocol.py::TestIapProtocol::test_auto_ack</td>
+          <td class="col-duration">0.02</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/unittest/test_iap_protocol.py::TestIapProtocol::test_auto_ack_record_num_wrap_around</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/unittest/test_iap_protocol.py::TestIapProtocol::test_receive_incomplete_stream</td>
+          <td class="col-duration">0.20</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/unittest/test_iap_protocol.py::TestIapProtocol::test_disable_auto_ack</td>
+          <td class="col-duration">0.02</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iridium_satellite/unittest/test_iridium_satellite_packet.py::TestIridiumSatellitePacket::test_satellite_packet</td>
+          <td class="col-duration">0.05</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iridium_satellite/unittest/test_iridium_satellite_packet.py::TestIridiumSatellitePacket::test_satellite_from_bytes</td>
+          <td class="col-duration">0.04</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iridium_satellite/unittest/test_iridium_satellite_packet.py::TestIridiumSatellitePacket::test_smdp_packet_from_invalid_bytes</td>
+          <td class="col-duration">0.04</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_packet.py::TestSmdpPacket::test_invalid_packet_from_bytes</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_packet.py::TestSmdpPacket::test_parse_smdp_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_packet.py::TestSmdpPacket::test_packet_de_escaping</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_packet.py::TestSmdpPacket::test_packet_escaping</td>
+          <td class="col-duration">0.07</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_protocol.py::TestSmdpProtocol::test_suppress_auto_ack</td>
+          <td class="col-duration">0.05</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_protocol.py::TestSmdpProtocol::test_clear_auto_ack_suppressions</td>
+          <td class="col-duration">0.04</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_protocol.py::TestSmdpProtocol::test_receive_callback_registered</td>
+          <td class="col-duration">0.46</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_protocol.py::TestSmdpProtocol::test_receive_packet</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_protocol.py::TestSmdpProtocol::test_auto_ack</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iap/unittest/test_iap_protocol.py::TestIapProtocol::test_receive_filtered</td>
+          <td class="col-duration">2.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iridium_satellite/unittest/test_iridium_satellite_protocol.py::TestSatelliteProtocol::test_receive_callback_registered</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iridium_satellite/unittest/test_iridium_satellite_protocol.py::TestSatelliteProtocol::test_receive_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iridium_satellite/unittest/test_iridium_satellite_protocol.py::TestSatelliteProtocol::test_receive_stream</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_protocol.py::TestSmdpProtocol::test_shared_receive</td>
+          <td class="col-duration">0.15</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iridium_satellite/unittest/test_iridium_satellite_protocol.py::TestSatelliteProtocol::test_receive_stream_with_payload</td>
+          <td class="col-duration">0.10</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/control/unittest/test_target_power.py::TestTargetPowerControl::test_target_power_mapping</td>
+          <td class="col-duration">3.16</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/control/unittest/test_target_programming.py::TestTargetProgramming::test_target_programming_mapping</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/control/unittest/test_target_smdp.py::TestTargetSmdp::test_all_interfaces_available</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/control/unittest/test_target_smdp.py::TestTargetSmdp::test_fallback_interface</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/control/unittest/test_target_smdp.py::TestTargetSmdp::test_request_invalid_interface</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/control/unittest/test_target_smdp.py::TestTargetSmdp::test_get_server_address</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/devices/unittest/test_daq.py::TestDaq::test_daq_init_and_close</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/devices/unittest/test_daq.py::TestDaq::test_daq_gpio_channel</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/devices/unittest/test_daq.py::TestDaq::test_daq_adc_channel</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/devices/unittest/test_daq.py::TestDaq::test_daq_dac_channel</td>
+          <td class="col-duration">0.05</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/forwarding_server/unittest/test_forwarding_server.py::TestForwardingServer::test_basic_forwarding</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/forwarding_server/unittest/test_forwarding_server.py::TestForwardingServer::test_receive_invalid_target_data</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/forwarding_server/unittest/test_forwarding_server.py::TestForwardingServer::test_receive_target_no_routing_entry</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/forwarding_server/unittest/test_forwarding_server.py::TestForwardingServer::test_host_receive_invalid_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/forwarding_server/unittest/test_forwarding_server.py::TestForwardingServer::test_host_receive_broken_packet</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log"> -------------------------------Captured log call-------------------------------- <br/>WARNING  static_check_pr-2284.python.forwarding_server.host:forwarding_server_host_protocol.py:219 Dropped 17 bytes during sync: b&#x27;fj49Z8034\xa5\xa5\x0032fvx&#x27;
+WARNING  static_check_pr-2284.python.forwarding_server.host:forwarding_server_host_protocol.py:219 Dropped 1 bytes during sync: b&#x27;\x00&#x27;
+WARNING  static_check_pr-2284.python.forwarding_server.host:forwarding_server_host_protocol.py:219 Dropped 12 bytes during sync: b&#x27;\x00\xa5\xa5\x00Z\x04esfew2&#x27;<br/></div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/forwarding_server/unittest/test_forwarding_server.py::TestForwardingServer::test_host_async_receive</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/forwarding_server/unittest/test_forwarding_server.py::TestForwardingServer::test_escape_bytes</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iridium_satellite/unittest/test_iridium_satellite_protocol.py::TestSatelliteProtocol::test_receive_garbage_stream</td>
+          <td class="col-duration">0.20</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iridium_satellite/unittest/test_iridium_satellite_protocol.py::TestSatelliteProtocol::test_send_raw_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iridium_satellite/unittest/test_iridium_satellite_protocol.py::TestSatelliteProtocol::test_send_raw_empty_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/forwarding_server/unittest/test_forwarding_server.py::TestForwardingServer::test_escaped_length</td>
+          <td class="col-duration">0.07</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/forwarding_server/unittest/test_forwarding_server.py::TestForwardingServer::test_host_receive_bad_wrapped_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/forwarding_server/unittest/test_forwarding_server.py::TestForwardingServer::test_host_receive_unknown_command</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/forwarding_server/unittest/test_forwarding_server.py::TestForwardingServer::test_receive_host_no_routing_entry</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/forwarding_server/unittest/test_forwarding_server.py::TestForwardingServer::test_receive_host_routing_table</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/forwarding_server/unittest/test_forwarding_server.py::TestForwardingServer::test_send_duplicate_routing_table_entries</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_sequence_number.py::TestSmdpSequenceNumbers::test_sequence_number_initial_value</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_protocol.py::TestSmdpProtocol::test_multiple_callbacks</td>
+          <td class="col-duration">0.02</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_sequence_number.py::TestSmdpSequenceNumbers::test_sequence_number_generation</td>
+          <td class="col-duration">0.02</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_sequence_number.py::TestSmdpSequenceNumbers::test_sequence_number_mutation</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tachosys/unittest/test_tachosys_packet.py::TestTachosysPacket::test_packet_to_bytes</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tachosys/unittest/test_tachosys_packet.py::TestTachosysPacket::test_invalid_packet_conversion</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tachosys/unittest/test_tachosys_protocol.py::TestTachosysProtocol::test_send</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_protocol.py::TestSmdpProtocol::test_receive_stream</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_protocol.py::TestSmdpProtocol::test_receive_multiple_stream</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_protocol.py::TestSmdpProtocol::test_receive_garbage_stream</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_protocol.py::TestSmdpProtocol::test_receive_incomplete_stream</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_bpm_it_packet.py::TestTn360BpmItPacket::test_packet</td>
+          <td class="col-duration">0.06</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tachosys/unittest/test_tachosys_protocol.py::TestTachosysProtocol::test_receive</td>
+          <td class="col-duration">0.50</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tachosys/unittest/test_tachosys_protocol.py::TestTachosysProtocol::test_receive_buffer</td>
+          <td class="col-duration">0.05</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tachosys/unittest/test_tachosys_protocol.py::TestTachosysProtocol::test_receive_invalid</td>
+          <td class="col-duration">0.05</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_ccs_packet.py::TestTn360CcsPacket::test_packet</td>
+          <td class="col-duration">0.04</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_alarm_packet.py::TestTn360AlarmPacket::test_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_bpm_ea_packet.py::TestTn360BpmEaPacket::test_packet</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_bpm_hb_packet.py::TestTn360BpmHbPacket::test_packet</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_debug_packet.py::TestTn360DebugPacket::test_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_did3_packet.py::TestTn360Did3Packet::test_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_did3_response_packet.py::TestTn360Did3ResponsePacket::test_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_edr_packet.py::TestTn360EdrPacket::test_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_emr_packet.py::TestTn360EmrPacket::test_packet_with_single_optional_data</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_emr_packet.py::TestTn360EmrPacket::test_packet_with_single_optional_data_for_impact</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_emr_packet.py::TestTn360EmrPacket::test_packet_without_optional_data</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_emr_packet.py::TestTn360EmrPacket::test_packet_with_optional_data</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_emr_packet.py::TestTn360EmrPacket::test_packet_with_multiple_lead_in_lead_out</td>
+          <td class="col-duration">0.02</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_ems_packet.py::TestTn360EmsPacket::test_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_esr_packet.py::TestTn360EsrPacket::test_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_general_telemetry_packet.py::TestTn360GeneralTelemetryPacket::test_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_generic_packet.py::TestTn360GenericPacket::test_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log"> -------------------------------Captured log call-------------------------------- <br/>WARNING  static_check_pr-2284.python.protocol.tn360:tn360_protocol.py:162 Unsupported MQTT topic: xyz<br/></div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_heli_packet.py::TestTn360HeliPacket::test_packet_with_one_entry</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_info_packet.py::TestTn360InfoPacket::test_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_info_packet.py::TestTn360InfoPacket::test_one_wire_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_ior_packet.py::TestTn360IorPacket::test_ignition_on</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_config_packet.py::TestTn360ConfigPacket::test_packet</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_ior_packet.py::TestTn360IorPacket::test_ignition_off</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_mdm_packet.py::TestTn360MdmPacket::test_packet_helicopter</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_mdm_packet.py::TestTn360MdmPacket::test_packet_ping</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_mdm_response_packet.py::TestTn360MdmResponsePacket::test_mdm_response_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_mnavmsg_packet.py::TestTn360MnavmsgPacket::test_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_movement_packet.py::TestTn360MovementPacket::test_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_pr2_packet.py::TestTn360Pr2Packet::test_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_pr2_packet.py::TestTn360Pr2Packet::test_packet_with_optional_fields</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_pr2_packet.py::TestTn360Pr2Packet::test_packet_with_null_fields</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_protocol.py::TestTn360GenericPacket::test_receive_type</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_config_packet.py::TestTn360ConfigPacket::test_packet_without_optional_fields</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_protocol.py::TestTn360GenericPacket::test_history</td>
+          <td class="col-duration">0.06</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_reg_packet.py::TestTn360RegPacket::test_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_satdiag_packet.py::TestTn360SatDiagPacket::test_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_sum_packet.py::TestTn360SumPacket::test_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_sum_packet.py::TestTn360SumPacket::test_packet_not_ok</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_sum_packet.py::TestTn360SumPacket::test_packet_with_vpm_data</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_sum_packet.py::TestTn360SumPacket::test_packet_with_end_of_trip_data</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_sum_packet.py::TestTn360SumPacket::test_packet_sherlock_with_vpm_data</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_csr_message_packet.py::TestTn360CsrMessagePacket::test_packet_ignition_off_battery_is_charging</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_vcm_packet.py::TestTn360VcmPacket::test_packet_without_optional_data</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_vcm_packet.py::TestTn360VcmPacket::test_packet_with_optional_data</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_vcm_packet.py::TestTn360VcmPacket::test_packet_with_j1708_data</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_vcm_packet.py::TestTn360VcmPacket::test_packet_sherlock_vcm</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_hal/unittest/test_simulated_flash.py::TestSimulatedFlash::test_invalid_init_parameters</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_hal/unittest/test_simulated_flash.py::TestSimulatedFlash::test_valid_init_parameters</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_hal/unittest/test_simulated_flash.py::TestSimulatedFlash::test_erased_on_init</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_hal/unittest/test_simulated_flash.py::TestSimulatedFlash::test_read_write</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_hal/unittest/test_simulated_flash.py::TestSimulatedFlash::test_read_parameters</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_hal/unittest/test_simulated_flash.py::TestSimulatedFlash::test_erase_sector_parameters</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_hal/unittest/test_ubx_message.py::TestUbxMessage::test_pvt_message</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_hal/unittest/test_ubx_message.py::TestUbxMessage::test_dop_message</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_link/unittest/test_simulator_link.py::TestSimulatorLink::test_receive_non_json</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log"> -------------------------------Captured log call-------------------------------- <br/>ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link.py:264 Failed to decode JSON: &#x27; &#x27;: (0x00, 0x01, 0x02, 0x03, 0x04, 0x05)
+Traceback (most recent call last):
+  File &quot;/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/python/simulator/simulator_link/simulator_link.py&quot;, line 258, in __on_receive
+    payload_dict = json.loads(json_string)
+  File &quot;/usr/lib/python3.6/json/__init__.py&quot;, line 354, in loads
+    return _default_decoder.decode(s)
+  File &quot;/usr/lib/python3.6/json/decoder.py&quot;, line 339, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File &quot;/usr/lib/python3.6/json/decoder.py&quot;, line 357, in raw_decode
+    raise JSONDecodeError(&quot;Expecting value&quot;, s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link.py:264 Failed to decode JSON: &#x27;&#x27;: ()
+Traceback (most recent call last):
+  File &quot;/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/python/simulator/simulator_link/simulator_link.py&quot;, line 258, in __on_receive
+    payload_dict = json.loads(json_string)
+  File &quot;/usr/lib/python3.6/json/__init__.py&quot;, line 354, in loads
+    return _default_decoder.decode(s)
+  File &quot;/usr/lib/python3.6/json/decoder.py&quot;, line 339, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File &quot;/usr/lib/python3.6/json/decoder.py&quot;, line 357, in raw_decode
+    raise JSONDecodeError(&quot;Expecting value&quot;, s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link.py:264 Failed to decode JSON: &#x27; &#x27;: (0x00, 0x01, 0x02, 0x03, 0x04, 0x05)
+Traceback (most recent call last):
+  File &quot;/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/python/simulator/simulator_link/simulator_link.py&quot;, line 258, in __on_receive
+    payload_dict = json.loads(json_string)
+  File &quot;/usr/lib/python3.6/json/__init__.py&quot;, line 354, in loads
+    return _default_decoder.decode(s)
+  File &quot;/usr/lib/python3.6/json/decoder.py&quot;, line 339, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File &quot;/usr/lib/python3.6/json/decoder.py&quot;, line 357, in raw_decode
+    raise JSONDecodeError(&quot;Expecting value&quot;, s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link.py:264 Failed to decode JSON: &#x27;&#x27;: ()
+Traceback (most recent call last):
+  File &quot;/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/python/simulator/simulator_link/simulator_link.py&quot;, line 258, in __on_receive
+    payload_dict = json.loads(json_string)
+  File &quot;/usr/lib/python3.6/json/__init__.py&quot;, line 354, in loads
+    return _default_decoder.decode(s)
+  File &quot;/usr/lib/python3.6/json/decoder.py&quot;, line 339, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File &quot;/usr/lib/python3.6/json/decoder.py&quot;, line 357, in raw_decode
+    raise JSONDecodeError(&quot;Expecting value&quot;, s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)<br/></div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_link/unittest/test_simulator_link.py::TestSimulatorLink::test_receive_function_call_message</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_link/unittest/test_simulator_link.py::TestSimulatorLink::test_receive_unsupported_function_call</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/tn360/unittest/test_tn360_csr_message_packet.py::TestTn360CsrMessagePacket::test_packet_ignition_on_battery_is_not_charging</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_hal/unittest/test_simulated_flash.py::TestSimulatedFlash::test_write_parameters</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_hal/unittest/test_simulated_flash.py::TestSimulatedFlash::test_erase_sector_operation</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_link/unittest/test_simulator_link.py::TestSimulatorLink::test_call_remote_function</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_link/unittest/test_simulator_link.py::TestSimulatorLink::test_call_remote_function_bad_return_sequence_number</td>
+          <td class="col-duration">0.10</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_link/unittest/test_simulator_link_protocol.py::TestSimulatorLinkProtocol::test_send_return</td>
+          <td class="col-duration">0.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_link/unittest/test_simulator_link_protocol.py::TestSimulatorLinkProtocol::test_send</td>
+          <td class="col-duration">0.04</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_link/unittest/test_simulator_link.py::TestSimulatorLink::test_call_remote_function_timeout</td>
+          <td class="col-duration">1.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_link/unittest/test_simulator_link_protocol.py::TestSimulatorLinkProtocol::test_send_invalid_options</td>
+          <td class="col-duration">0.04</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_link/unittest/test_simulator_link_protocol.py::TestSimulatorLinkProtocol::test_receive_return</td>
+          <td class="col-duration">0.07</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iridium_satellite/unittest/test_iridium_satellite_protocol.py::TestSatelliteProtocol::test_suppress_auto_response_single</td>
+          <td class="col-duration">5.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_packet.py::TestSmdpPacket::test_packet_field_equality</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_packet.py::TestSmdpPacket::test_smdp_packet_fields</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_packet.py::TestSmdpPacket::test_smdp_packet_fields_from_bytes</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_packet.py::TestSmdpPacket::test_smdp_packet_fields_from_invalid_bytes</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_packet.py::TestSmdpPacket::test_smdp_packet_from_bytes</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_packet.py::TestSmdpPacket::test_smdp_packet_from_fields</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_packet.py::TestSmdpPacket::test_smdp_packet_constructors</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_link/unittest/test_simulator_link_protocol.py::TestSimulatorLinkProtocol::test_receive_multiple</td>
+          <td class="col-duration">0.51</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_link/unittest/test_simulator_link.py::TestSimulatorLink::test_call_remote_function_timeout_and_application_state_change</td>
+          <td class="col-duration">1.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_link/unittest/test_simulator_link_protocol.py::TestSimulatorLinkProtocol::test_receive_return_split</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_link/unittest/test_simulator_link_protocol.py::TestSimulatorLinkProtocol::test_receive_wrapped_checksum</td>
+          <td class="col-duration">0.50</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/simulator_link/unittest/test_simulator_link_protocol.py::TestSimulatorLinkProtocol::test_receive_bad_packets</td>
+          <td class="col-duration">1.10</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log"> -------------------------------Captured log call-------------------------------- <br/>ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x5c, 0x3f
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x3f, 0x01
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x01, 0x08
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x08, 0xa2
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0xa2, 0x00
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x00, 0x3a
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x3a, 0x7b
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x7b, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x68
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x68, 0x61
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x61, 0x6c
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x6c, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x3a
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x3a, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x6d
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x6d, 0x79
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x79, 0x5f
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x5f, 0x68
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x68, 0x61
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x61, 0x6c
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x6c, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x2c
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x2c, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x66
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x66, 0x75
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x75, 0x6e
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x6e, 0x63
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x63, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x3a
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x3a, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x6d
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x6d, 0x79
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x79, 0x5c
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x5c, 0x5c
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x5c, 0x5f
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x5f, 0x66
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x66, 0x75
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x75, 0x6e
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x6e, 0x63
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x63, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x2c
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x2c, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x72
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x72, 0x65
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x65, 0x74
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x74, 0x75
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x75, 0x72
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x72, 0x6e
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x6e, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x3a
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x3a, 0x74
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x74, 0x72
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x72, 0x75
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x75, 0x65
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x65, 0x7d
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x7d, 0x12
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x12, 0x36
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x36, 0x5c
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:295 SimulatorLink: Checksum fail.
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x3e, 0x01
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x01, 0x08
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x08, 0xa2
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0xa2, 0x00
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x00, 0x3b
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x3b, 0x7b
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x7b, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x68
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x68, 0x61
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x61, 0x6c
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x6c, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x3a
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x3a, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x6d
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x6d, 0x79
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x79, 0x5f
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x5f, 0x68
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x68, 0x61
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x61, 0x6c
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x6c, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x2c
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x2c, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x66
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x66, 0x75
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x75, 0x6e
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x6e, 0x63
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x63, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x3a
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x3a, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x6d
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x6d, 0x79
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x79, 0x5c
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x5c, 0x5c
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x5c, 0x5f
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x5f, 0x66
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x66, 0x75
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x75, 0x6e
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x6e, 0x63
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x63, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x2c
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x2c, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x72
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x72, 0x65
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x65, 0x74
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x74, 0x75
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x75, 0x72
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x72, 0x6e
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x6e, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x3a
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x3a, 0x74
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x74, 0x72
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x72, 0x75
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x75, 0x65
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x65, 0x7d
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x7d, 0x12
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x12, 0x36
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x36, 0x5c
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:295 SimulatorLink: Checksum fail.
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x3e, 0x01
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x01, 0x08
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x08, 0xa2
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0xa2, 0x00
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x00, 0x3a
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x3a, 0x7b
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x7b, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x68
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x68, 0x61
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x61, 0x6c
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x6c, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x3a
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x3a, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x6d
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x6d, 0x79
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x79, 0x5f
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x5f, 0x68
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x68, 0x61
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x61, 0x6c
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x6c, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x2c
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x2c, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x66
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x66, 0x75
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x75, 0x6e
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x6e, 0x63
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x63, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x3a
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x3a, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x6d
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x6d, 0x79
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x79, 0x5c
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x5c, 0x5c
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x5c, 0x5f
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x5f, 0x66
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x66, 0x75
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x75, 0x6e
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x6e, 0x63
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x63, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x2c
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x2c, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x72
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x72, 0x65
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x65, 0x74
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x74, 0x75
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x75, 0x72
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x72, 0x6e
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x6e, 0x22
+ERROR    static_check_pr-2284.python.simulator.simulator_link:simulator_link_protocol.py:273 SimulatorLink: Bad start: 0x22, 0x3a<br/></div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iridium_satellite/unittest/test_iridium_satellite_protocol.py::TestSatelliteProtocol::test_auto_response</td>
+          <td class="col-duration">5.03</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/unittest/test_simulator_target.py::TestSimulatorTarget::test_start_stop_application</td>
+          <td class="col-duration">2.65</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/unittest/test_simulator_target.py::TestSimulatorTarget::test_start_stop_application_stdout_dump</td>
+          <td class="col-duration">2.77</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/unittest/test_fixture.py::TestFixture::test_setup_simulator</td>
+          <td class="col-duration">0.06</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/unittest/test_fixture.py::TestFixture::test_setup_teardown</td>
+          <td class="col-duration">0.07</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log"> -------------------------------Captured log call-------------------------------- <br/>WARNING  static_check_pr-2284.python.control.target_power:target_power.py:49 No digital multimeter configured, falling back to power supply for current measurement<br/></div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/simulator/unittest/test_simulator_target.py::TestSimulatorTarget::test_change_application</td>
+          <td class="col-duration">2.41</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/iridium_satellite/unittest/test_iridium_satellite_protocol.py::TestSatelliteProtocol::test_suppress_auto_response</td>
+          <td class="col-duration">5.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_protocol.py::TestSmdpProtocol::test_receive_empty_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_protocol.py::TestSmdpProtocol::test_send_raw_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_protocol.py::TestSmdpProtocol::test_send_raw_empty_packet</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_protocol.py::TestSmdpProtocol::test_send_different_formats</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_protocol.py::TestSmdpProtocol::test_send_with_auto_line_termination</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_protocol.py::TestSmdpProtocolSharedReceiveFilter::test_basic_receive</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_protocol.py::TestSmdpProtocolSharedReceiveFilter::test_receive_different_packet</td>
+          <td class="col-duration">1.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_protocol.py::TestSmdpProtocolSharedReceiveFilter::test_receive_multiple_packets</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">python/protocol/smdp/unittest/test_smdp_protocol.py::TestSmdpProtocolSharedReceiveFilter::test_receive_nothing</td>
+          <td class="col-duration">1.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody></table></body></html>

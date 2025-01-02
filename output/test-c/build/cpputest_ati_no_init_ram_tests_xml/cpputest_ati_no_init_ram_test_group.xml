@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="ati_no_init_ram_test_group" tests="14" time="0.001" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="ati_no_init_ram_test_group" name="clear_all" assertions="2" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_no_init_ram_tests/ati_no_init_ram_tests.cpp" line="277">
+</testcase>
+<testcase classname="ati_no_init_ram_test_group" name="corrupt_with_both_settings_saved" assertions="6" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_no_init_ram_tests/ati_no_init_ram_tests.cpp" line="261">
+</testcase>
+<testcase classname="ati_no_init_ram_test_group" name="corrupt_with_single_setting_saved" assertions="6" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_no_init_ram_tests/ati_no_init_ram_tests.cpp" line="246">
+</testcase>
+<testcase classname="ati_no_init_ram_test_group" name="check_values_are_previously_saved_when_updating" assertions="9" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_no_init_ram_tests/ati_no_init_ram_tests.cpp" line="205">
+</testcase>
+<testcase classname="ati_no_init_ram_test_group" name="read_settings_before_saving" assertions="7" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_no_init_ram_tests/ati_no_init_ram_tests.cpp" line="195">
+</testcase>
+<testcase classname="ati_no_init_ram_test_group" name="save_settings_twice_and_corrupt_second_copy_sequence_number" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_no_init_ram_tests/ati_no_init_ram_tests.cpp" line="183">
+</testcase>
+<testcase classname="ati_no_init_ram_test_group" name="save_settings_twice_and_corrupt_first_copy_sequence_number" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_no_init_ram_tests/ati_no_init_ram_tests.cpp" line="171">
+</testcase>
+<testcase classname="ati_no_init_ram_test_group" name="save_settings_twice_and_corrupt_second_copy_crc" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_no_init_ram_tests/ati_no_init_ram_tests.cpp" line="159">
+</testcase>
+<testcase classname="ati_no_init_ram_test_group" name="save_settings_twice_and_corrupt_first_copy_crc" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_no_init_ram_tests/ati_no_init_ram_tests.cpp" line="147">
+</testcase>
+<testcase classname="ati_no_init_ram_test_group" name="save_settings_three_times" assertions="4" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_no_init_ram_tests/ati_no_init_ram_tests.cpp" line="136">
+</testcase>
+<testcase classname="ati_no_init_ram_test_group" name="save_settings_twice" assertions="4" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_no_init_ram_tests/ati_no_init_ram_tests.cpp" line="126">
+</testcase>
+<testcase classname="ati_no_init_ram_test_group" name="save_settings_once" assertions="4" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_no_init_ram_tests/ati_no_init_ram_tests.cpp" line="117">
+</testcase>
+<testcase classname="ati_no_init_ram_test_group" name="non_initialised_ram_has_all_bits_set" assertions="4" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_no_init_ram_tests/ati_no_init_ram_tests.cpp" line="107">
+</testcase>
+<testcase classname="ati_no_init_ram_test_group" name="non_initialised_ram_values_are_zero" assertions="4" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_no_init_ram_tests/ati_no_init_ram_tests.cpp" line="99">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

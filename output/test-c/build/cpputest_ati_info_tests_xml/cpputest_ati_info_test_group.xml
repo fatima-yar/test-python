@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="ati_info_test_group" tests="40" time="0.001" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="ati_info_test_group" name="out_of_range_config_lower_limit" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="379">
+</testcase>
+<testcase classname="ati_info_test_group" name="out_of_range_config_upper_limit" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="373">
+</testcase>
+<testcase classname="ati_info_test_group" name="getting_config_failed" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="367">
+</testcase>
+<testcase classname="ati_info_test_group" name="hardware_config_h" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="361">
+</testcase>
+<testcase classname="ati_info_test_group" name="hardware_config_g" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="355">
+</testcase>
+<testcase classname="ati_info_test_group" name="hardware_config_f" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="349">
+</testcase>
+<testcase classname="ati_info_test_group" name="hardware_config_e" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="343">
+</testcase>
+<testcase classname="ati_info_test_group" name="hardware_config_d" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="337">
+</testcase>
+<testcase classname="ati_info_test_group" name="hardware_config_c" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="331">
+</testcase>
+<testcase classname="ati_info_test_group" name="hardware_config_a_b" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="325">
+</testcase>
+<testcase classname="ati_info_test_group" name="hardware_config_a" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="319">
+</testcase>
+<testcase classname="ati_info_test_group" name="ati_info_get_running_time_msec" assertions="29" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="298">
+</testcase>
+<testcase classname="ati_info_test_group" name="ati_info_get_reset_cause_unknown" assertions="4" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="292">
+</testcase>
+<testcase classname="ati_info_test_group" name="ati_info_get_reset_cause_option_byte" assertions="4" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="286">
+</testcase>
+<testcase classname="ati_info_test_group" name="ati_info_get_reset_cause_firewall" assertions="4" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="280">
+</testcase>
+<testcase classname="ati_info_test_group" name="ati_info_get_reset_cause_brown_out" assertions="4" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="274">
+</testcase>
+<testcase classname="ati_info_test_group" name="ati_info_get_reset_cause_pin" assertions="4" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="268">
+</testcase>
+<testcase classname="ati_info_test_group" name="ati_info_get_reset_cause_software_reset" assertions="4" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="262">
+</testcase>
+<testcase classname="ati_info_test_group" name="ati_info_get_reset_cause_" assertions="4" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="256">
+</testcase>
+<testcase classname="ati_info_test_group" name="ati_info_get_reset_cause_windowed_wdt" assertions="4" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="250">
+</testcase>
+<testcase classname="ati_info_test_group" name="device_model_is_unknown_failed_to_read_configuration" assertions="17" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="239">
+</testcase>
+<testcase classname="ati_info_test_group" name="device_model_is_unknown_pvt_configuration" assertions="17" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="228">
+</testcase>
+<testcase classname="ati_info_test_group" name="device_model_is_unknown_configuration" assertions="17" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="217">
+</testcase>
+<testcase classname="ati_info_test_group" name="device_model_is_unknown" assertions="7" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="208">
+</testcase>
+<testcase classname="ati_info_test_group" name="device_model_is_advanced_rugged_pvt_e" assertions="17" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="197">
+</testcase>
+<testcase classname="ati_info_test_group" name="device_model_is_advanced_rugged_pvt_c" assertions="17" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="186">
+</testcase>
+<testcase classname="ati_info_test_group" name="device_model_is_advanced_rugged_pvt_a" assertions="17" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="175">
+</testcase>
+<testcase classname="ati_info_test_group" name="device_model_is_advanced_rugged_e" assertions="17" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="164">
+</testcase>
+<testcase classname="ati_info_test_group" name="device_model_is_advanced_rugged_c" assertions="17" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="153">
+</testcase>
+<testcase classname="ati_info_test_group" name="device_model_is_advanced_rugged_a" assertions="17" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="142">
+</testcase>
+<testcase classname="ati_info_test_group" name="device_model_is_advanced_gateway_pvt_e" assertions="17" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="131">
+</testcase>
+<testcase classname="ati_info_test_group" name="device_model_is_advanced_gateway_pvt_c" assertions="17" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="120">
+</testcase>
+<testcase classname="ati_info_test_group" name="device_model_is_advanced_gateway_pvt_a" assertions="17" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="109">
+</testcase>
+<testcase classname="ati_info_test_group" name="device_model_is_advanced_gateway_e" assertions="17" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="98">
+</testcase>
+<testcase classname="ati_info_test_group" name="device_model_is_advanced_gateway_c" assertions="17" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="87">
+</testcase>
+<testcase classname="ati_info_test_group" name="device_model_is_advanced_gateway_a" assertions="17" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="76">
+</testcase>
+<testcase classname="ati_info_test_group" name="device_model_is_9wire" assertions="7" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="67">
+</testcase>
+<testcase classname="ati_info_test_group" name="device_model_is_20wire" assertions="7" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="58">
+</testcase>
+<testcase classname="ati_info_test_group" name="device_model_is_obdii" assertions="7" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="48">
+</testcase>
+<testcase classname="ati_info_test_group" name="device_type_is_hermes" assertions="1" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_info_tests/ati_info_tests.cpp" line="43">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

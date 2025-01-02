@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="ati_gnss_test_group" tests="40" time="0.020" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="ati_gnss_test_group" name="gnss_set_minimum_elevation_unhandled" assertions="62" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1944">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="gnss_set_minimum_elevation_failed" assertions="62" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1926">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="gnss_set_minimum_elevation" assertions="70" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1902">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="attempt_to_disable_invalid_gnss_system" assertions="2" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1896">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="disable_gnss_system_gps_already_disabled" assertions="53" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1883">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="disable_gnss_system_gps_initially_enabled" assertions="70" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1863">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="failed_to_enable_gnss_system" assertions="60" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1846">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="enable_gps_but_failed_to_get_currently_enabled_gnss_system" assertions="56" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1832">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="attempt_to_enable_invalid_gnss_system" assertions="2" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1826">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="enable_gnss_satellite_gps_already_enabled" assertions="53" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1812">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="enable_multiple_gnss_systems" assertions="57" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1795">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="enable_gnss_satellite_gps_initially_disabled" assertions="57" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1780">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="gnss_callback_trigger_with_invalid_length_message" assertions="38" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1768">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_process_with_valid_data_to_generate_satellite_message_overwriting_old_samples" assertions="286" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1714">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="svinfo_message_after_failing_to_get_hardware_version" assertions="65" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1658">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="svinfo_message_with_undefined_hardware_version" assertions="65" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1603">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_process_svinfo_message_with_out_of_gnss_system_range" assertions="64" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1550">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_process_with_valid_data_to_generate_satellite_message_with_unhealthy_unqualified_svinfo" assertions="64" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1489">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_process_with_valid_data_to_generate_svinfo_message" assertions="65" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1432">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_process_satellite_message_with_out_of_gnss_system_range" assertions="64" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1380">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_process_with_valid_data_to_generate_satellite_message_with_unhealthy_unqualified_sats" assertions="64" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1312">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_process_with_valid_data_to_generate_satellite_message" assertions="64" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1254">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_receive_future_time" assertions="116" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1129">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_software_version" assertions="39" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1113">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_process_with_incorrect_checksum_data_2" assertions="54" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1101">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_process_with_incorrect_checksum_data_1" assertions="54" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1087">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_process_with_incorrect_length_data" assertions="54" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1076">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_process_with_data_that_have_no_handler" assertions="65" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="1022">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_data_get_initialise_after_enable" assertions="97" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="997">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_process_with_valid_fix_type_but_no_valid_fix" assertions="66" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="891">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_process_with_capped_hdop_value" assertions="66" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="834">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_process_with_valid_data_to_generate_raw_gnss_data_with_valid_data_but_no_fix" assertions="66" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="727">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_process_with_valid_data_to_generate_raw_gnss_data_with_2d_fix" assertions="66" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="670">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_process_with_valid_data_to_generate_raw_gnss_data" assertions="66" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="613">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="gnss_callback_trigger_with_valid_message" assertions="44" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="599">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_process_unknown" assertions="48" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="591">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_failed_to_get_gnss_power_status" assertions="12" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="579">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_disable" assertions="21" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="566">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_enable" assertions="1152" time="0.012" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="494">
+</testcase>
+<testcase classname="ati_gnss_test_group" name="ati_gnss_initialisation" assertions="90" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gnss_tests/ati_gnss_tests.cpp" line="478">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

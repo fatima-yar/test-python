@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="ati_external_sensor_base_group" tests="6" time="0.000" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="ati_external_sensor_base_group" name="get_external_sensor_state_disabled" assertions="4" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_external_sensor_tests/ati_external_sensor_tests.cpp" line="71">
+</testcase>
+<testcase classname="ati_external_sensor_base_group" name="get_external_sensor_state_enabled" assertions="4" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_external_sensor_tests/ati_external_sensor_tests.cpp" line="65">
+</testcase>
+<testcase classname="ati_external_sensor_base_group" name="external_sensor_disable_failed" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_external_sensor_tests/ati_external_sensor_tests.cpp" line="56">
+</testcase>
+<testcase classname="ati_external_sensor_base_group" name="external_sensor_disable_success" assertions="3" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_external_sensor_tests/ati_external_sensor_tests.cpp" line="50">
+</testcase>
+<testcase classname="ati_external_sensor_base_group" name="external_sensor_enable_failed" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_external_sensor_tests/ati_external_sensor_tests.cpp" line="41">
+</testcase>
+<testcase classname="ati_external_sensor_base_group" name="external_sensor_enable_success" assertions="3" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_external_sensor_tests/ati_external_sensor_tests.cpp" line="35">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

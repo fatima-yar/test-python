@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="ati_can_test_group" tests="50" time="19.175" timestamp="2024-11-18T11:25:36">
+<properties>
+</properties>
+<testcase classname="ati_can_test_group" name="test_clear_message_info" assertions="50" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="996">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_get_total_message_count_rx_more_than_max_uint32_messages" assertions="203" time="19.168" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="970">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_get_total_message_count_rx_max_uint32_message" assertions="208" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="940">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_get_total_message_count_rx_one_message" assertions="14" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="923">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_get_total_message_count_nothing_received_test" assertions="14" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="914">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_is_can_active_with_error_test" assertions="27" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="903">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_is_can_active__after_start_test" assertions="17" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="895">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_is_can_active__before_start_test" assertions="12" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="890">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_is_can_passive" assertions="31" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="871">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_is_can_busoff" assertions="31" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="852">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_transmit_not_available" assertions="16" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="845">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_transmit_available" assertions="16" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="838">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_transmit_failure" assertions="16" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="827">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_transmit_successful" assertions="16" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="816">
+</testcase>
+<testcase classname="ati_can_test_group" name="error_and_message_processing_non_critical_error" assertions="117" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="775">
+</testcase>
+<testcase classname="ati_can_test_group" name="rx_message_above_max_can_extended_identifiers" assertions="813" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="717">
+</testcase>
+<testcase classname="ati_can_test_group" name="rx_message_max_can_standard_identifiers" assertions="799" time="0.002" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="673">
+</testcase>
+<testcase classname="ati_can_test_group" name="nothing_published_try_to_get_buffered_can_id" assertions="13" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="664">
+</testcase>
+<testcase classname="ati_can_test_group" name="nothing_published_get_count" assertions="12" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="659">
+</testcase>
+<testcase classname="ati_can_test_group" name="rx_message_same_frames_alternate_standard_and_extended" assertions="279" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="630">
+</testcase>
+<testcase classname="ati_can_test_group" name="rx_message_queue_full" assertions="185" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="581">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_no_rx_callback" assertions="27" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="565">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_callback_on_process_receive" assertions="32" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="550">
+</testcase>
+<testcase classname="ati_can_test_group" name="multiple_non_critical_errors_together" assertions="32" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="521">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_callback_on_process_range_of_hal_errors" assertions="272" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="488">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_callback_on_process_errors" assertions="86" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="461">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_other_error" assertions="13" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="454">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_on_passive_error" assertions="13" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="448">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_on_busoff_error" assertions="13" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="442">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_notify_on_error_non_critical" assertions="13" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="436">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_notify_on_receive" assertions="13" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="423">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_configure_invalid" assertions="25" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="411">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_configure_valid" assertions="15" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="402">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_stop_inactive_bus" assertions="12" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="397">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_stop_error" assertions="21" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="387">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_stop_no_error" assertions="20" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="378">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_start_active_bus" assertions="18" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="370">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_start_error" assertions="26" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="361">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_start_no_error" assertions="16" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="354">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_disable_api" assertions="14" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="347">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_enable_api" assertions="14" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="340">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_set_filter_list_error" assertions="17" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="327">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_set_filter_list_no_error" assertions="15" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="316">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_set_filter_error" assertions="17" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="303">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_set_filter_no_error" assertions="15" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="292">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_reset_error_not_called_if_can_is_started" assertions="18" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="282">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_reset_error" assertions="19" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="275">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_get_error_register" assertions="21" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="268">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_configure_valid_called_after_start_fails" assertions="22" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="250">
+</testcase>
+<testcase classname="ati_can_test_group" name="ati_can_initialise_only" assertions="11" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_can_tests/ati_can_tests.cpp" line="245">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="ati_cellular_basic_test_group" tests="91" time="0.131" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="ati_cellular_basic_test_group" name="lost_network_while_iridium_service_isi_enabled" assertions="814" time="0.004" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="2141">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="receive_fota_command_before_activation" assertions="35" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="2134">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_timer_trigger_unexpectedly" assertions="65" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="2126">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="disable_modem_while_modem_is_resetting" assertions="98" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="2101">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_reset_modem_while_modem_is_on" assertions="89" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="2082">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_enable_modem_while_modem_is_already_on" assertions="113" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="2067">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_activate_successfully_without_callback_registered" assertions="173" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="2042">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_activate_successfully_with_two_callbacks_registered" assertions="174" time="0.011" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="2012">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="multiple_apn_support_for_same_mcc_mnc" assertions="155" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1991">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="cellular_modem_receive_hal_cellular_network_detached_error_from_hal" assertions="244" time="0.002" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1945">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="apn_stores_in_non_init_ram_next_module_power_up_wont_loop_all_possible_apn" assertions="223" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1904">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="lost_network" assertions="817" time="0.011" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1826">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_timestamp_is_valid_after_getting_utp" assertions="170" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1802">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_read_rtc_bad_data" assertions="232" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1757">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_read_rtc_receive_string_too_long_repeatedly" assertions="666" time="0.003" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1717">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_read_rtc_receive_string_too_long_once" assertions="183" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1682">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_read_rtc_callback_fails_repeatedly" assertions="657" time="0.003" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1642">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_read_rtc_callback_fails_once" assertions="182" time="0.006" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1607">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_read_rtc_function_call_fails_repeatedly" assertions="257" time="0.002" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1570">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_read_rtc_function_call_fails_once" assertions="188" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1535">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_read_rtc_successfully" assertions="189" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1485">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_utc_time_receive_string_too_long_repeatedly" assertions="585" time="0.003" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1454">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_utc_time_receive_string_too_long_once" assertions="156" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1431">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_utc_time_response_fails_repeatedly" assertions="585" time="0.003" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1400">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_utc_time_response_fails_once" assertions="156" time="0.003" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1377">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_utc_time_callback_fails_repeatedly" assertions="576" time="0.008" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1347">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_utc_time_callback_fails_once" assertions="155" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1325">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_utc_time_function_call_fails_repeatedly" assertions="230" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1296">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_utc_time_function_call_fails_once" assertions="161" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1273">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_utc_time_successfully" assertions="154" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1253">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_operation_receive_string_too_long_repeatedly" assertions="636" time="0.003" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1222">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_operation_receive_string_too_long_once" assertions="171" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1198">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_operation_callback_fails_repeatedly" assertions="618" time="0.003" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1169">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_operation_callback_fails_once" assertions="169" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1146">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_operation_function_call_fails_repeatedly" assertions="244" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1116">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_operation_function_call_fails_once" assertions="175" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1091">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_operation_successfully" assertions="189" time="0.003" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1064">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_rssi_receive_string_too_long_repeatedly" assertions="594" time="0.002" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1038">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_rssi_receive_string_too_long_once" assertions="157" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="1017">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_rssi_callback_fails_repeatedly" assertions="576" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="991">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_rssi_callback_fails_once" assertions="155" time="0.006" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="971">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_rssi_function_call_fails_repeatedly" assertions="230" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="943">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_rssi_function_call_fails_once" assertions="161" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="920">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_rssi_successfully" assertions="143" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="904">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_read_ip_address_receive_string_too_long_repeatedly" assertions="541" time="0.002" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="878">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_read_ip_address_receive_string_too_long_once" assertions="157" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="852">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_read_ip_address_callback_fails_repeatedly" assertions="523" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="829">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_read_ip_address_callback_fails_once" assertions="142" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="813">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_read_ip_address_function_call_fails_repeatedly" assertions="541" time="0.002" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="785">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_read_ip_address_function_call_fails_once" assertions="148" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="765">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_read_ip_address_successful" assertions="128" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="752">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_activate_powered_check_fails_repeatedly" assertions="469" time="0.002" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="732">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_activate_powered_check_fails_once" assertions="123" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="718">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_activate_powered_check_successful" assertions="128" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="700">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_activate_callback_fails_repeatedly_after_match_found" assertions="572" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="663">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_activate_callback_fails_once_after_match_found" assertions="284" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="632">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_activate_callback_fails_repeatedly" assertions="517" time="0.002" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="598">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_activate_callback_fails_once" assertions="155" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="580">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_activate_function_call_fails_repeatedly" assertions="460" time="0.002" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="559">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_activate_function_call_fails_once" assertions="125" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="541">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_activate_successful" assertions="109" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="530">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="shutdown_initiated_after_connection_no_user_registered" assertions="145" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="491">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="shutdown_initiated_after_successful_connect_with_two_users" assertions="204" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="437">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_disable_to_reload_apn_callback_fails_repeatedly" assertions="415" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="416">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_disable_to_reload_apn_callback_fails_once" assertions="110" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="403">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_disable_to_reload_apn_function_call_fails_repeatedly" assertions="433" time="0.002" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="381">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_disable_to_reload_apn_function_call_fails_once" assertions="116" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="363">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_disable_to_reload_apn_successful" assertions="100" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="353">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_set_apn_callback_fails_repeatedly" assertions="394" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="336">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_set_apn_callback_fails_once" assertions="102" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="325">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_set_apn_function_call_fails_repeatedly" assertions="412" time="0.002" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="306">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_set_apn_function_call_fails_once" assertions="108" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="290">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_set_apn_successful" assertions="91" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="280">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_set_apn_successful_readback" assertions="90" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="269">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_set_region_function_call_fails_repeatedly" assertions="346" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="252">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_set_region_function_call_fails_once" assertions="86" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="239">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_set_region_function_call_successful" assertions="70" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="232">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_imsi_callback_fails_repeatedly" assertions="310" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="215">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_imsi_callback_fails_once" assertions="73" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="207">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_imsi_function_call_fails_repeatedly" assertions="328" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="191">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_imsi_function_call_fails_once" assertions="79" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="178">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_imsi_successful" assertions="62" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="171">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_iccid_callback_fails_repeatedly" assertions="271" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="153">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_iccid_callback_fails_once" assertions="61" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="137">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_iccid_function_call_fails_repeatedly" assertions="289" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="121">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_iccid_function_call_fails_once" assertions="67" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="103">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_modem_enable_get_power_returns_off_repeatedly" assertions="216" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="80">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_modem_enable_get_power_returns_off_once" assertions="67" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="68">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_modem_enable_get_power_function_call_fails_repeatedly" assertions="225" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="47">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_modem_enable_get_power_function_call_fails_once" assertions="69" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="34">
+</testcase>
+<testcase classname="ati_cellular_basic_test_group" name="ati_cellular_get_iccid_successful" assertions="49" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_basic_tests.cpp" line="29">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

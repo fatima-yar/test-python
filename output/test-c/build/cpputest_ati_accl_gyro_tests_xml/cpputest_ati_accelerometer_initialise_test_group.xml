@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="ati_accelerometer_initialise_test_group" tests="7" time="0.001" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="ati_accelerometer_initialise_test_group" name="init_set_sensorwake_accelerometer_data_fail" assertions="40" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="327">
+</testcase>
+<testcase classname="ati_accelerometer_initialise_test_group" name="init_set_sensorwake_accelerometer_bump_fail" assertions="40" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="313">
+</testcase>
+<testcase classname="ati_accelerometer_initialise_test_group" name="init_set_accl_fifo_fail" assertions="32" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="301">
+</testcase>
+<testcase classname="ati_accelerometer_initialise_test_group" name="set_power_successful_after_retry" assertions="34" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="283">
+</testcase>
+<testcase classname="ati_accelerometer_initialise_test_group" name="set_power_fail_exceed_allowable_retry" assertions="83" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="271">
+</testcase>
+<testcase classname="ati_accelerometer_initialise_test_group" name="init_success_with_bump_enable" assertions="23" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="258">
+</testcase>
+<testcase classname="ati_accelerometer_initialise_test_group" name="init_success_with_no_bump_enable" assertions="19" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="251">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

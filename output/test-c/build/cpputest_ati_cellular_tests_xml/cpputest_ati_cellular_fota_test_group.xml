@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="ati_cellular_fota_test_group" tests="9" time="0.008" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="ati_cellular_fota_test_group" name="cellular_fota_callback_fails_repeatedly" assertions="284" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_tests.cpp" line="423">
+</testcase>
+<testcase classname="ati_cellular_fota_test_group" name="cellular_fota_callback_fails_once" assertions="268" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_tests.cpp" line="406">
+</testcase>
+<testcase classname="ati_cellular_fota_test_group" name="cellular_fota_call_failed_repeatedly" assertions="292" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_tests.cpp" line="388">
+</testcase>
+<testcase classname="ati_cellular_fota_test_group" name="cellular_fota_call_failed_once" assertions="274" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_tests.cpp" line="367">
+</testcase>
+<testcase classname="ati_cellular_fota_test_group" name="cellular_fota_with_https_server_successful" assertions="255" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_tests.cpp" line="355">
+</testcase>
+<testcase classname="ati_cellular_fota_test_group" name="cellular_fota_with_http_server_successful" assertions="255" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_tests.cpp" line="343">
+</testcase>
+<testcase classname="ati_cellular_fota_test_group" name="fota_url_too_long" assertions="177" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_tests.cpp" line="336">
+</testcase>
+<testcase classname="ati_cellular_fota_test_group" name="fota_url_has_zero_length" assertions="177" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_tests.cpp" line="329">
+</testcase>
+<testcase classname="ati_cellular_fota_test_group" name="fota_url_is_null" assertions="177" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_tests.cpp" line="322">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

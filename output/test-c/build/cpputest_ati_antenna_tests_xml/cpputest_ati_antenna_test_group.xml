@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="ati_antenna_test_group" tests="15" time="0.003" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="ati_antenna_test_group" name="enter_exit_low_power_mode_no_external_antenna_support" assertions="21" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_antenna_tests/ati_antenna_tests.cpp" line="290">
+</testcase>
+<testcase classname="ati_antenna_test_group" name="enter_exit_low_power_mode_antenna_unshorted" assertions="73" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_antenna_tests/ati_antenna_tests.cpp" line="273">
+</testcase>
+<testcase classname="ati_antenna_test_group" name="enter_exit_low_power_mode_antenna_shorted" assertions="73" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_antenna_tests/ati_antenna_tests.cpp" line="256">
+</testcase>
+<testcase classname="ati_antenna_test_group" name="enter_exit_low_power_mode_antenna_reconnected" assertions="73" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_antenna_tests/ati_antenna_tests.cpp" line="239">
+</testcase>
+<testcase classname="ati_antenna_test_group" name="enter_exit_low_power_mode_antenna_disconnected" assertions="73" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_antenna_tests/ati_antenna_tests.cpp" line="222">
+</testcase>
+<testcase classname="ati_antenna_test_group" name="enter_exit_low_power_mode_no_change" assertions="70" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_antenna_tests/ati_antenna_tests.cpp" line="206">
+</testcase>
+<testcase classname="ati_antenna_test_group" name="change_quickly_reverts" assertions="35" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_antenna_tests/ati_antenna_tests.cpp" line="192">
+</testcase>
+<testcase classname="ati_antenna_test_group" name="simultaneous_changes" assertions="47" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_antenna_tests/ati_antenna_tests.cpp" line="171">
+</testcase>
+<testcase classname="ati_antenna_test_group" name="short_and_unshort_antenna" assertions="41" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_antenna_tests/ati_antenna_tests.cpp" line="153">
+</testcase>
+<testcase classname="ati_antenna_test_group" name="disconnect_and_reconnect_antenna" assertions="41" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_antenna_tests/ati_antenna_tests.cpp" line="135">
+</testcase>
+<testcase classname="ati_antenna_test_group" name="initialise_with_antenna_disconnected_and_shorted" assertions="29" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_antenna_tests/ati_antenna_tests.cpp" line="126">
+</testcase>
+<testcase classname="ati_antenna_test_group" name="initialise_with_antenna_shorted" assertions="29" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_antenna_tests/ati_antenna_tests.cpp" line="117">
+</testcase>
+<testcase classname="ati_antenna_test_group" name="initialise_with_antenna_disconnected" assertions="29" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_antenna_tests/ati_antenna_tests.cpp" line="108">
+</testcase>
+<testcase classname="ati_antenna_test_group" name="initialise_with_antenna_connected" assertions="29" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_antenna_tests/ati_antenna_tests.cpp" line="99">
+</testcase>
+<testcase classname="ati_antenna_test_group" name="test_ati_antenna_initialise_not_supported" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_antenna_tests/ati_antenna_tests.cpp" line="91">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="ati_misc_power_test_group" tests="14" time="0.001" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="ati_misc_power_test_group" name="ati_power_set_switching_dc_output_failed" assertions="5" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_power_tests/ati_power_tests.cpp" line="234">
+</testcase>
+<testcase classname="ati_misc_power_test_group" name="ati_power_set_switching_dc_output_success" assertions="3" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_power_tests/ati_power_tests.cpp" line="224">
+</testcase>
+<testcase classname="ati_misc_power_test_group" name="ati_power_is_internal_battery_charging_failed" assertions="7" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_power_tests/ati_power_tests.cpp" line="211">
+</testcase>
+<testcase classname="ati_misc_power_test_group" name="ati_power_is_internal_battery_charging" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_power_tests/ati_power_tests.cpp" line="199">
+</testcase>
+<testcase classname="ati_misc_power_test_group" name="ati_power_internal_battery_temperature_above_limit" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_power_tests/ati_power_tests.cpp" line="187">
+</testcase>
+<testcase classname="ati_misc_power_test_group" name="ati_power_internal_battery_temperature_below_limit" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_power_tests/ati_power_tests.cpp" line="175">
+</testcase>
+<testcase classname="ati_misc_power_test_group" name="ati_power_internal_battery_temperature_failed" assertions="7" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_power_tests/ati_power_tests.cpp" line="162">
+</testcase>
+<testcase classname="ati_misc_power_test_group" name="ati_power_internal_battery_temperature" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_power_tests/ati_power_tests.cpp" line="150">
+</testcase>
+<testcase classname="ati_misc_power_test_group" name="ati_power_internal_battery_charge_percentage_failed" assertions="7" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_power_tests/ati_power_tests.cpp" line="137">
+</testcase>
+<testcase classname="ati_misc_power_test_group" name="ati_power_internal_battery_charge_percentage" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_power_tests/ati_power_tests.cpp" line="125">
+</testcase>
+<testcase classname="ati_misc_power_test_group" name="ati_power_get_internal_battery_voltage_failed" assertions="7" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_power_tests/ati_power_tests.cpp" line="112">
+</testcase>
+<testcase classname="ati_misc_power_test_group" name="ati_power_get_internal_battery_voltage" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_power_tests/ati_power_tests.cpp" line="101">
+</testcase>
+<testcase classname="ati_misc_power_test_group" name="ati_get_supply_voltage" assertions="3" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_power_tests/ati_power_tests.cpp" line="92">
+</testcase>
+<testcase classname="ati_misc_power_test_group" name="ati_system_reset" assertions="17" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_power_tests/ati_power_tests.cpp" line="78">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

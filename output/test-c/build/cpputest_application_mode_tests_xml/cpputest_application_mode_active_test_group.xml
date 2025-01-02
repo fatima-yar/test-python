@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="application_mode_active_test_group" tests="6" time="0.002" timestamp="2024-11-18T11:25:10">
+<properties>
+</properties>
+<testcase classname="application_mode_active_test_group" name="keep_application_powered" assertions="17" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/app/application_mode_tests/application_mode_tests.cpp" line="280">
+</testcase>
+<testcase classname="application_mode_active_test_group" name="over_temperature_exit_shutdown" assertions="35" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/app/application_mode_tests/application_mode_tests.cpp" line="263">
+</testcase>
+<testcase classname="application_mode_active_test_group" name="over_temperature_enter_shutdown" assertions="20" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/app/application_mode_tests/application_mode_tests.cpp" line="254">
+</testcase>
+<testcase classname="application_mode_active_test_group" name="ignition_off_standby_never_sleep" assertions="19" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/app/application_mode_tests/application_mode_tests.cpp" line="246">
+</testcase>
+<testcase classname="application_mode_active_test_group" name="ignition_off_standby_default" assertions="27" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/app/application_mode_tests/application_mode_tests.cpp" line="235">
+</testcase>
+<testcase classname="application_mode_active_test_group" name="ignition_on" assertions="16" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/app/application_mode_tests/application_mode_tests.cpp" line="230">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

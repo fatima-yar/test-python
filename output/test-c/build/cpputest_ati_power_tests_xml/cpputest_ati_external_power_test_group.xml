@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="ati_external_power_test_group" tests="1" time="0.000" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="ati_external_power_test_group" name="ati_power_initialisation" assertions="3" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_power_tests/ati_power_tests.cpp" line="68">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

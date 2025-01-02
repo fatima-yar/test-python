@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="ati_cellular_initialisation_test_group" tests="7" time="0.003" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="ati_cellular_initialisation_test_group" name="ati_cellular_initialise_successfully" assertions="31" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_tests.cpp" line="123">
+</testcase>
+<testcase classname="ati_cellular_initialisation_test_group" name="ati_cellular_initialise_get_imei_fails_repeatedly" assertions="86" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_tests.cpp" line="99">
+</testcase>
+<testcase classname="ati_cellular_initialisation_test_group" name="ati_cellular_initialise_get_imei_fails_once" assertions="54" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_tests.cpp" line="87">
+</testcase>
+<testcase classname="ati_cellular_initialisation_test_group" name="ati_cellular_initialise_get_version_fails_repeatedly" assertions="68" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_tests.cpp" line="66">
+</testcase>
+<testcase classname="ati_cellular_initialisation_test_group" name="ati_cellular_initialise_get_version_fails_once" assertions="48" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_tests.cpp" line="55">
+</testcase>
+<testcase classname="ati_cellular_initialisation_test_group" name="ati_cellular_initialise_power_up_fails_repeatedly" assertions="53" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_tests.cpp" line="37">
+</testcase>
+<testcase classname="ati_cellular_initialisation_test_group" name="ati_cellular_initialise_power_up_fails_once" assertions="43" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/port/cellular/ati_cellular_tests/ati_cellular_tests.cpp" line="27">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

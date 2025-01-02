@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="ati_gpio_test_advance_gateway_group" tests="41" time="0.004" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_reporting_states_mixed_with_other_input_states" assertions="46" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="660">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_reporting_toggle_twice" assertions="44" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="641">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_reporting_toggling_reported_only_once_rising_edge" assertions="34" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="626">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_reporting_toggling_reported_only_once_falling_edge" assertions="34" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="611">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_reporting_falling_edge_followed_by_rising_edge" assertions="26" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="594">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_reporting_rising_edge_followed_by_falling_edge" assertions="26" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="577">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_reporting_consecutive_rising_edges_reported_only_once" assertions="25" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="564">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_reporting_consecutive_falling_edges_reported_only_once" assertions="25" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="551">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_reporting_sequence" assertions="36" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="532">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_input_state_low_multiple_times" assertions="136" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="514">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_input_state_high_multiple_times" assertions="136" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="496">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_state_set_callback_for_reserved_and_invalid_pin" assertions="3" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="488">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_state_change_on_all_inputs_callback_callback_not_registered" assertions="60" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="475">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_state_change_callback_for_reserved_and_invalid_pin" assertions="3" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="468">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_state_change_callback_different_levels" assertions="32" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="448">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_state_change_callback_all_valid_input_sources" assertions="64" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="432">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_configure_inputs_both_edges_and_pull_down" assertions="21" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="415">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_configure_inputs_both_edges_and_pull_up" assertions="21" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="397">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_configure_inputs_falling_and_pull_down" assertions="21" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="379">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_configure_inputs_falling_and_pull_up" assertions="21" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="361">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_configure_inputs_rising_and_pull_down" assertions="21" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="343">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_configure_inputs_rising_and_pull_up" assertions="21" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="325">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_configure_inputs_invalid_interrupt_config" assertions="3" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="320">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_configure_inputs_reserved_and_invalid_gpio_id" assertions="3" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="315">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_disabling_interrupt_valid_gpio_failed" assertions="16" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="302">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_disabling_interrupt_valid_gpio_success" assertions="21" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="287">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_disabling_interrupt_on_reserved_and_invalid_gpio_id" assertions="3" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="282">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_enabling_interrupt_valid_gpio_success" assertions="21" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="266">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_enabling_interrupt_on_reserved_and_invalid_gpio_id" assertions="3" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="261">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_setting_output_pin_high_state_failed" assertions="21" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="252">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_setting_output_pin_low_state_failed" assertions="21" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="243">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_setting_output_pin_state_low" assertions="21" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="234">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_setting_output_pin_state_high" assertions="21" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="225">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_setting_output_pin_state_invalid_state" assertions="3" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="220">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_setting_output_pin_state_invalid_gpio_id" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="213">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_reading_output_pin_state_invalid_gpio_id" assertions="3" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="207">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_reading_output_pin_state_high" assertions="21" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="196">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_reading_output_pin_state_low" assertions="21" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="185">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_reading_input_state_invalid_gpio_id" assertions="3" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="179">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_reading_input_state_high" assertions="21" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="168">
+</testcase>
+<testcase classname="ati_gpio_test_advance_gateway_group" name="test_reading_input_state_low" assertions="21" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="157">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

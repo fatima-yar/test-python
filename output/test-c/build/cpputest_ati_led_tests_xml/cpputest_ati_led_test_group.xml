@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="ati_led_test_group" tests="4" time="0.001" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="ati_led_test_group" name="test_ati_led_indicate_on_unsupported_device" assertions="4" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_led_tests/ati_led_tests.cpp" line="170">
+</testcase>
+<testcase classname="ati_led_test_group" name="test_ati_led_indicate_on_single_led_device" assertions="73" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_led_tests/ati_led_tests.cpp" line="107">
+</testcase>
+<testcase classname="ati_led_test_group" name="test_ati_led_indicate_on_multi_led_device" assertions="57" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_led_tests/ati_led_tests.cpp" line="62">
+</testcase>
+<testcase classname="ati_led_test_group" name="test_ati_led_init" assertions="93" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_led_tests/ati_led_tests.cpp" line="49">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

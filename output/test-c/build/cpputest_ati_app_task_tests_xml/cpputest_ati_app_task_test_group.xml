@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="ati_app_task_test_group" tests="6" time="0.003" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="ati_app_task_test_group" name="config_setting_is_busy" assertions="83" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_app_task_tests/ati_app_task_tests.cpp" line="336">
+</testcase>
+<testcase classname="ati_app_task_test_group" name="otap_and_ephemeris_are_disabled_by_default" assertions="84" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_app_task_tests/ati_app_task_tests.cpp" line="278">
+</testcase>
+<testcase classname="ati_app_task_test_group" name="priority_check_timeout_invalid" assertions="57" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_app_task_tests/ati_app_task_tests.cpp" line="228">
+</testcase>
+<testcase classname="ati_app_task_test_group" name="priority_check_timeout_valid" assertions="55" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_app_task_tests/ati_app_task_tests.cpp" line="177">
+</testcase>
+<testcase classname="ati_app_task_test_group" name="priority_set_fails" assertions="110" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_app_task_tests/ati_app_task_tests.cpp" line="123">
+</testcase>
+<testcase classname="ati_app_task_test_group" name="ati_app_task_function_execution" assertions="80" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_app_task_tests/ati_app_task_tests.cpp" line="73">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

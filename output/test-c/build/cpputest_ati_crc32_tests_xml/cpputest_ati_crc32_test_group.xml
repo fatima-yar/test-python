@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="ati_crc32_test_group" tests="8" time="0.000" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="ati_crc32_test_group" name="test_verify_calculate_with_seed" assertions="4" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_crc32_tests/ati_crc32_tests.cpp" line="95">
+</testcase>
+<testcase classname="ati_crc32_test_group" name="test_crc32_calculate" assertions="4" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_crc32_tests/ati_crc32_tests.cpp" line="82">
+</testcase>
+<testcase classname="ati_crc32_test_group" name="test_crc32_verify_false" assertions="4" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_crc32_tests/ati_crc32_tests.cpp" line="72">
+</testcase>
+<testcase classname="ati_crc32_test_group" name="test_crc32_verify_true" assertions="4" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_crc32_tests/ati_crc32_tests.cpp" line="61">
+</testcase>
+<testcase classname="ati_crc32_test_group" name="test_append_crc32" assertions="4" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_crc32_tests/ati_crc32_tests.cpp" line="45">
+</testcase>
+<testcase classname="ati_crc32_test_group" name="test_append_crc32_with_size_less_than_four_bytes" assertions="0" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_crc32_tests/ati_crc32_tests.cpp" line="39">
+</testcase>
+<testcase classname="ati_crc32_test_group" name="test_append_crc32_null_pointer" assertions="0" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_crc32_tests/ati_crc32_tests.cpp" line="33">
+</testcase>
+<testcase classname="ati_crc32_test_group" name="test_initialisation" assertions="2" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_crc32_tests/ati_crc32_tests.cpp" line="27">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

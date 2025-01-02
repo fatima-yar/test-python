@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="gyro_fail_initialisation_test_group" tests="2" time="0.000" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="gyro_fail_initialisation_test_group" name="gyro_disable_call_on_init_failed" assertions="88" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="960">
+</testcase>
+<testcase classname="gyro_fail_initialisation_test_group" name="gyro_enable_call_on_init_failed" assertions="88" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="948">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

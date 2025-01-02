@@ -1,0 +1,369 @@
+
+--------------------------------------------------------------------------------
+Executing Command: 'pytest --cov --cov-report term --cov-report html --cov-report xml --cov-fail-under=60 -ra -n auto --junitxml=output/test_python/pytest.xml --html=output/test_python/html_pytest/pytest.html python/ functional_test/ task_assistant.py jenkins_crawler.py launcher.py'
+============================= test session starts ==============================
+platform linux -- Python 3.6.9, pytest-5.4.2, py-1.9.0, pluggy-0.13.0
+rootdir: /home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284, inifile: setup.cfg
+plugins: xdist-1.32.0, dash-1.14.0, html-2.1.1, metadata-1.8.0, forked-1.1.3, cov-2.8.1
+gw0 I / gw1 I / gw2 I / gw3 Igw0 C / gw1 I / gw2 I / gw3 Igw0 C / gw1 C / gw2 I / gw3 Igw0 C / gw1 C / gw2 C / gw3 Igw0 C / gw1 C / gw2 C / gw3 Cgw0 ok / gw1 C / gw2 C / gw3 Cgw0 ok / gw1 ok / gw2 C / gw3 Cgw0 ok / gw1 ok / gw2 ok / gw3 Cgw0 ok / gw1 ok / gw2 ok / gw3 okgw0 ok / gw1 ok / gw2 [301] / gw3 okgw0 ok / gw1 ok / gw2 [301] / gw3 [301]gw0 [301] / gw1 ok / gw2 [301] / gw3 [301]gw0 [301] / gw1 [301] / gw2 [301] / gw3 [301]
+........................................................................ [ 23%]
+........................................................................ [ 47%]
+........................................................................ [ 71%]
+........................................................................ [ 95%]
+..Exception in thread Simulator Server Thread (56807):
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/python/simulator/simulator_link/simulator_link_tcp_server.py", line 126, in __server_thread
+    s_socket.bind(("", PORT_NUMBER))
+OSError: [Errno 98] Address already in use
+
+..........Target environment playback task terminated on exception
+Traceback (most recent call last):
+  File "/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/python/control/target_environment/target_environment_base.py", line 161, in __playback_task
+    with self.__current_entry_lock:
+  File "/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/python/control/target_environment/target_environment_simulated.py", line 66, in _update_environment
+    if SimulatorTarget().target_is_running():
+  File "/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/python/common/singleton.py", line 42, in __call__
+    cls.__instances[cls] = super().__call__(*args, **kwargs)
+  File "/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/python/simulator/simulator_target.py", line 43, in __init__
+    self.__simulator_link = SimulatorLink()
+  File "/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/python/simulator/simulator_link/simulator_link.py", line 53, in __init__
+    self.__protocol = SimulatorLinkProtocol(self.__on_receive)
+  File "/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/python/simulator/simulator_link/simulator_link_protocol.py", line 89, in __init__
+    self.__tcp_server = SimulatorLinkTcpServer(self.__tcp_send_queue, self.__tcp_receive_queue)
+  File "/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/python/simulator/simulator_link/simulator_link_tcp_server.py", line 91, in __init__
+    raise ServerStartError("Failed to start server.")
+python.simulator.simulator_link.simulator_link_tcp_server.ServerStartError: Failed to start server.
+.                                                            [100%][gw3] node down: Not properly terminated
+
+replacing crashed worker gw3
+gw0 [301] / gw1 [301] / gw2 [301] / gw4 C    gw0 [301] / gw1 [301] / gw2 [301] / gw4 okCoverage.py warning: No data was collected. (no-data-collected)
+Coverage.py warning: Data file '/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/output/test_python/.coverage.hermesci-Standard-PC-i440FX-PIIX-1996.5286.088321' doesn't seem to be a coverage data file: 'NoneType' object is not iterable
+
+- generated xml file: /home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/output/test_python/pytest.xml -
+- generated html file: file:///home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/output/test_python/html_pytest/pytest.html -
+
+----------- coverage: platform linux, python 3.6.9-final-0 -----------
+---------------------- coverage: failed workers ----------------------
+The following workers failed to return coverage data, ensure that pytest-cov is installed on these workers.
+gw3
+Name                                                                                            Stmts   Miss Branch BrPart  Cover
+---------------------------------------------------------------------------------------------------------------------------------
+python/app/aft_dashboard.py                                                                        93     74     43      0    14%
+python/app/application.py                                                                          54     27     14      0    40%
+python/app/oss_message_retrieval.py                                                                24     15      2      0    35%
+python/common/accel_gyro.py                                                                        44     20      8      0    46%
+python/common/advanced_sleep.py                                                                    27      2     10      2    89%
+python/common/binary_tree/binary_tree_item.py                                                      39      0      6      0   100%
+python/common/binary_tree/decoder.py                                                               30      4      8      2    79%
+python/common/binary_tree/encoder.py                                                               23      2      4      1    89%
+python/common/binary_utilities.py                                                                  73     43     14      1    36%
+python/common/bit_array/bit_array_conversion.py                                                    37      2     14      2    92%
+python/common/breadcrumb.py                                                                       139      5     38      2    96%
+python/common/correlation.py                                                                       27      0     12      1    97%
+python/common/device_information.py                                                               110     54     30      0    40%
+python/common/environment/environment.py                                                           72     30     20      3    49%
+python/common/geofence.py                                                                          47      3     12      2    88%
+python/common/geography.py                                                                         76     27     20      4    64%
+python/common/git.py                                                                               55     29     16      0    37%
+python/common/gpio/fields/gpio_enumerations.py                                                     32      0      0      0   100%
+python/common/json_helper.py                                                                       25      4     12      1    86%
+python/common/log_manager.py                                                                       38     18      6      0    45%
+python/common/make_version.py                                                                      58     43     10      1    24%
+python/common/print_format.py                                                                      17      0      6      0   100%
+python/common/scheduler.py                                                                         59      0     12      0   100%
+python/common/sequence_generator.py                                                                32      2     10      2    90%
+python/common/singleton.py                                                                         27      0     10      1    97%
+python/common/stdout_logger.py                                                                     24      2      0      0    92%
+python/common/time_series_compression/fields/acceleration.py                                       24      0      0      0   100%
+python/common/time_series_compression/fields/accelerator_pedal.py                                  23      0      0      0   100%
+python/common/time_series_compression/fields/altitude.py                                           24      0      0      0   100%
+python/common/time_series_compression/fields/bearing.py                                            29      0      0      0   100%
+python/common/time_series_compression/fields/brake_pedal.py                                        23      0      0      0   100%
+python/common/time_series_compression/fields/coolant_temperature.py                                23      0      0      0   100%
+python/common/time_series_compression/fields/engine_hours.py                                       26      0      0      0   100%
+python/common/time_series_compression/fields/engine_speed.py                                       23      0      0      0   100%
+python/common/time_series_compression/fields/ev_battery_current.py                                 31      0      0      0   100%
+python/common/time_series_compression/fields/ev_battery_soc.py                                     29      0      0      0   100%
+python/common/time_series_compression/fields/ev_battery_temperature.py                             30      0      0      0   100%
+python/common/time_series_compression/fields/ev_battery_voltage.py                                 26      0      0      0   100%
+python/common/time_series_compression/fields/ev_flags.py                                           22      1      0      0    95%
+python/common/time_series_compression/fields/ev_health_state.py                                    29      0      0      0   100%
+python/common/time_series_compression/fields/ev_remaining_range.py                                 26      0      0      0   100%
+python/common/time_series_compression/fields/fuel_consumption.py                                   26      0      0      0   100%
+python/common/time_series_compression/fields/gear.py                                              156      0      0      0   100%
+python/common/time_series_compression/fields/gps_speed.py                                          23      0      0      0   100%
+python/common/time_series_compression/fields/hdop.py                                               27      0      0      0   100%
+python/common/time_series_compression/fields/heading.py                                            24      0      0      0   100%
+python/common/time_series_compression/fields/latitude_longitude.py                                151      2     12      2    98%
+python/common/time_series_compression/fields/odometer.py                                           23      0      0      0   100%
+python/common/time_series_compression/fields/oil_pressure.py                                       23      0      0      0   100%
+python/common/time_series_compression/fields/oil_temperature.py                                    23      0      0      0   100%
+python/common/time_series_compression/fields/satellites.py                                         23      0      0      0   100%
+python/common/time_series_compression/fields/time.py                                               44      0      0      0   100%
+python/common/time_series_compression/fields/time_series_compression_field.py                      12      0      0      0   100%
+python/common/time_series_compression/fields/vehicle_speed.py                                      23      0      0      0   100%
+python/common/time_series_compression/time_series_compression_decoder.py                          100      8     44      2    90%
+python/common/time_series_compression/time_series_compression_encoder.py                          123      5     38      4    94%
+python/common/time_series_compression/time_series_compression_sample.py                            48      0      2      0   100%
+python/common/time_series_compression2/fields/acceleration.py                                      24      0      0      0   100%
+python/common/time_series_compression2/fields/accelerator_pedal.py                                 23      0      0      0   100%
+python/common/time_series_compression2/fields/altitude.py                                          27      0      0      0   100%
+python/common/time_series_compression2/fields/ambient_temp.py                                      25      0      0      0   100%
+python/common/time_series_compression2/fields/atm_pressure.py                                      23      0      0      0   100%
+python/common/time_series_compression2/fields/bearing.py                                           29      0      0      0   100%
+python/common/time_series_compression2/fields/brake_pedal.py                                       23      0      0      0   100%
+python/common/time_series_compression2/fields/brake_switch.py                                      28      0      0      0   100%
+python/common/time_series_compression2/fields/coolant_temperature.py                               25      0      0      0   100%
+python/common/time_series_compression2/fields/def_level.py                                         23      0      0      0   100%
+python/common/time_series_compression2/fields/engine_hours.py                                      26      0      0      0   100%
+python/common/time_series_compression2/fields/engine_speed.py                                      23      0      0      0   100%
+python/common/time_series_compression2/fields/ev_battery_current.py                                26      0      0      0   100%
+python/common/time_series_compression2/fields/ev_battery_power.py                                  26      0      0      0   100%
+python/common/time_series_compression2/fields/ev_battery_soc.py                                    28      0      0      0   100%
+python/common/time_series_compression2/fields/ev_battery_temperature.py                            25      0      0      0   100%
+python/common/time_series_compression2/fields/ev_battery_voltage.py                                26      0      0      0   100%
+python/common/time_series_compression2/fields/ev_flags.py                                          22      0      0      0   100%
+python/common/time_series_compression2/fields/ev_health_state.py                                   28      0      0      0   100%
+python/common/time_series_compression2/fields/ev_remaining_range.py                                26      0      0      0   100%
+python/common/time_series_compression2/fields/front_axle_speed.py                                  23      0      0      0   100%
+python/common/time_series_compression2/fields/fuel_consumption.py                                  26      0      0      0   100%
+python/common/time_series_compression2/fields/fuel_economy.py                                      23      0      0      0   100%
+python/common/time_series_compression2/fields/fuel_level.py                                        23      0      0      0   100%
+python/common/time_series_compression2/fields/fuel_mass_rate.py                                    26      0      0      0   100%
+python/common/time_series_compression2/fields/fuel_rate.py                                         26      0      0      0   100%
+python/common/time_series_compression2/fields/fuel_temp.py                                         23      0      0      0   100%
+python/common/time_series_compression2/fields/fuel_trim.py                                         23      0      0      0   100%
+python/common/time_series_compression2/fields/fuel_type.py                                         50      0      0      0   100%
+python/common/time_series_compression2/fields/gear.py                                             156      0      0      0   100%
+python/common/time_series_compression2/fields/gov_state.py                                         29      2      4      2    88%
+python/common/time_series_compression2/fields/gps_speed.py                                         23      0      0      0   100%
+python/common/time_series_compression2/fields/hdop.py                                              27      0      0      0   100%
+python/common/time_series_compression2/fields/heading.py                                           24      0      0      0   100%
+python/common/time_series_compression2/fields/hybrid_soc.py                                        23      0      0      0   100%
+python/common/time_series_compression2/fields/intake_air_temp.py                                   25      0      0      0   100%
+python/common/time_series_compression2/fields/intake_map.py                                        23      0      0      0   100%
+python/common/time_series_compression2/fields/latitude_longitude.py                               151      7     12      5    91%
+python/common/time_series_compression2/fields/mass_air_flow.py                                     26      0      0      0   100%
+python/common/time_series_compression2/fields/mil.py                                               28      0      0      0   100%
+python/common/time_series_compression2/fields/odometer.py                                          26      1      0      0    96%
+python/common/time_series_compression2/fields/oil_pressure.py                                      26      0      0      0   100%
+python/common/time_series_compression2/fields/oil_temperature.py                                   25      0      0      0   100%
+python/common/time_series_compression2/fields/pto.py                                               36      0      0      0   100%
+python/common/time_series_compression2/fields/satellites.py                                        23      0      0      0   100%
+python/common/time_series_compression2/fields/seconds_since_last_can.py                            26      1      0      0    96%
+python/common/time_series_compression2/fields/time.py                                              44      0      0      0   100%
+python/common/time_series_compression2/fields/time_series_compression_field.py                     52      9      8      0    78%
+python/common/time_series_compression2/fields/trip_fuel.py                                         26      0      0      0   100%
+python/common/time_series_compression2/fields/vehicle_hours.py                                     26      0      0      0   100%
+python/common/time_series_compression2/fields/vehicle_load.py                                      23      0      0      0   100%
+python/common/time_series_compression2/fields/vehicle_speed.py                                     23      0      0      0   100%
+python/common/time_series_compression2/time_series_compression2_decoder.py                        159     23     62      4    81%
+python/common/time_series_compression2/time_series_compression2_encoder.py                        146      5     38      5    95%
+python/common/time_series_compression2/time_series_compression_sample.py                           76      0      2      0   100%
+python/common/type_fields.py                                                                       65      3      4      0    96%
+python/common/unit_test_helpers.py                                                                 46      3     16      1    94%
+python/common/visa_interface.py                                                                    71     52      8      0    24%
+python/comms/can_bus.py                                                                            81     64     26      0    16%
+python/comms/comms.py                                                                              19      1      0      0    95%
+python/comms/comms_implementation.py                                                               19      0      2      0   100%
+python/comms/forwarding_server_tcp_client.py                                                       49      3     14      5    87%
+python/comms/j1708_bus.py                                                                          81     64     22      0    17%
+python/comms/mqtt_client.py                                                                        84     29     24      3    59%
+python/comms/raw_packet.py                                                                         37      9     16      5    74%
+python/comms/serial_port.py                                                                        33      5      6      0    82%
+python/comms/simulated_can_bus.py                                                                  21      8      0      0    62%
+python/comms/simulated_j1708_bus.py                                                                20      7      0      0    65%
+python/comms/simulated_serial_port.py                                                              17      7      2      0    53%
+python/comms/tcp_client.py                                                                         59     39     10      0    29%
+python/control/case_tamper/case_tamper_control_base.py                                              5      0      0      0   100%
+python/control/case_tamper/case_tamper_control_simulated.py                                        14      6      0      0    57%
+python/control/digital_inputs/digital_input_base.py                                                51     20     14      0    48%
+python/control/digital_inputs/digital_input_control.py                                             62     44     26      0    20%
+python/control/digital_inputs/digital_input_simulated.py                                           20      9      4      0    46%
+python/control/digital_outputs/digital_output_control.py                                           34     22     18      0    23%
+python/control/digital_outputs/digital_output_control_base.py                                      16      0      0      0   100%
+python/control/external_antenna/external_antenna_control_base.py                                    7      0      0      0   100%
+python/control/external_antenna/external_antenna_control_simulated.py                              21     12      0      0    43%
+python/control/ignition/ignition_control.py                                                        29      2      8      2    89%
+python/control/ignition/ignition_control_base.py                                                   11      0      0      0   100%
+python/control/ignition/ignition_control_simulated.py                                              21      1      6      1    93%
+python/control/target_1wire/one_wire_control.py                                                    24     12     10      0    35%
+python/control/target_1wire/one_wire_control_base.py                                               12      0      0      0   100%
+python/control/target_accel_gyro/target_accel_gyro.py                                               8      2      0      0    75%
+python/control/target_accel_gyro/target_accel_gyro_base.py                                        108     72     24      0    27%
+python/control/target_accel_gyro/target_accel_gyro_simulated.py                                    10      3      2      0    58%
+python/control/target_cellular/target_cellular_base.py                                             13      1      0      0    92%
+python/control/target_cellular/target_cellular_simulated.py                                        14      5      0      0    64%
+python/control/target_did3/target_did3.py                                                          13      3      0      0    77%
+python/control/target_edr1/target_edr1.py                                                          17      6      0      0    65%
+python/control/target_environment/target_environment.py                                            10      1      0      0    90%
+python/control/target_environment/target_environment_base.py                                      128     35     30      5    67%
+python/control/target_environment/target_environment_simulated.py                                  42      9     18      7    73%
+python/control/target_iap/target_iap.py                                                            10      3      0      0    70%
+python/control/target_iridium_satellite/target_iridium_satellite.py                                13      3      0      0    77%
+python/control/target_mnav/target_mnav.py                                                          13      3      0      0    77%
+python/control/target_obm/target_obm.py                                                            54     33      2      0    38%
+python/control/target_power/target_power.py                                                        90     11     22      6    83%
+python/control/target_power/target_power_base.py                                                   38      1      0      0    97%
+python/control/target_power/target_power_simulated.py                                              74     52     22      0    23%
+python/control/target_programming/target_programming.py                                            20      1      2      1    91%
+python/control/target_programming/target_programming_base.py                                        6      0      0      0   100%
+python/control/target_programming/target_programming_simulated.py                                   8      2      0      0    75%
+python/control/target_smdp/target_smdp.py                                                          49     19     20      0    49%
+python/control/target_solenoid/solenoid_control.py                                                 20      8      2      0    55%
+python/control/target_terminal/target_tachograph.py                                                15      6      0      0    60%
+python/control/target_terminal/target_terminal.py                                                  12      3      0      0    75%
+python/control/target_tn360/target_tn360.py                                                         9      2      0      0    78%
+python/control/temperature/temperature_control_base.py                                              9      0      0      0   100%
+python/control/temperature/temperature_control_simulated.py                                        22      9      0      0    59%
+python/control/vehicle/dtc_types.py                                                                12      0      0      0   100%
+python/control/vehicle/j1939/j1939_ecu.py                                                          89     43     24      0    41%
+python/control/vehicle/j1939/j1939_parameter_controller.py                                        395    281    136      0    21%
+python/control/vehicle/j1939/j1939_transport.py                                                    72     49     16      0    26%
+python/control/vehicle/vehicle.py                                                                 158    123     48      0    17%
+python/control/vehicle/vehicle_ecu.py                                                              62     21      6      0    60%
+python/control/vehicle/vehicle_parameter.py                                                        52      0      0      0   100%
+python/dashboard/dashboard.py                                                                     171    120     60      0    22%
+python/devices/data_acquisition/daq.py                                                             50     15      6      0    73%
+python/devices/data_acquisition/daq_adc_channel.py                                                 11      0      0      0   100%
+python/devices/data_acquisition/daq_dac_channel.py                                                 16      2      4      2    80%
+python/devices/data_acquisition/daq_gpio_channel.py                                                18      0      6      0   100%
+python/devices/data_acquisition/daq_implementation.py                                              24      0      0      0   100%
+python/devices/data_acquisition/daq_relay_channel.py                                                6      0      0      0   100%
+python/devices/data_acquisition/numato_usb_daq.py                                                  84     56     22      0    26%
+python/devices/device_factory.py                                                                   58     20      0      0    66%
+python/devices/digital_multimeter/digital_multimeter.py                                            22     10      0      0    55%
+python/devices/digital_multimeter/digital_multimeter_channel.py                                    23     12      4      0    41%
+python/devices/digital_multimeter/digital_multimeter_implementation.py                             17      0      0      0   100%
+python/devices/digital_multimeter/dm3058e.py                                                       56     39      6      0    27%
+python/devices/digital_multimeter/gdm834x.py                                                       39     26     10      0    27%
+python/devices/jtag/jtag.py                                                                        15      6      0      0    60%
+python/devices/jtag/jtag_implementation.py                                                         12      0      0      0   100%
+python/devices/jtag/pyocd_jtag.py                                                                  37     23     10      0    30%
+python/devices/named_channel.py                                                                    20     10      8      0    36%
+python/devices/power_supply/power_supply.py                                                        41     24      6      0    36%
+python/devices/power_supply/power_supply_channel.py                                                15      4      4      0    58%
+python/devices/power_supply/power_supply_implementation.py                                         19      0      0      0   100%
+python/devices/power_supply/rigol_dp8xx.py                                                         30     16      2      0    44%
+python/devices/power_supply/tenma_72x.py                                                           55     36     14      0    28%
+python/fixture.py                                                                                 483    155    174     32    61%
+python/forwarding_server/comms/forwarding_server_comms.py                                           9      0      0      0   100%
+python/forwarding_server/comms/forwarding_server_connection.py                                     13      0      0      0   100%
+python/forwarding_server/forwarding_server.py                                                      81     10     14      0    87%
+python/forwarding_server/forwarding_server_error.py                                                 5      0      0      0   100%
+python/forwarding_server/host/forwarding_server_host_protocol.py                                  101      0     24      0   100%
+python/forwarding_server/host/host_manager.py                                                      31      1      6      1    95%
+python/forwarding_server/routing_table.py                                                          44      0     12      0   100%
+python/forwarding_server/target/forwarding_server_target_protocol/target_protocol.py               18      0      4      0   100%
+python/forwarding_server/target/forwarding_server_target_protocol/target_protocol_edr1.py          19      0      2      0   100%
+python/forwarding_server/target/forwarding_server_target_protocol/target_protocol_iap.py           35      3     14      2    90%
+python/forwarding_server/target/forwarding_server_target_protocol/target_protocol_smdp.py          33      1     14      1    96%
+python/forwarding_server/target/forwarding_server_target_protocol/target_protocol_tachosys.py      36      4     14      4    84%
+python/forwarding_server/target/target_manager.py                                                  25      0      4      0   100%
+python/protocol/can/can_frame.py                                                                   13      5      2      0    53%
+python/protocol/can/can_protocol.py                                                                39     21     10      0    37%
+python/protocol/edr1/edr1_server_protocol.py                                                       50      6     10      3    82%
+python/protocol/iap/iap_protocol.py                                                               143     18     66      8    84%
+python/protocol/iap/packets/adm_packet.py                                                          46     11     18      8    70%
+python/protocol/iap/packets/iap_base_packet.py                                                     21      1      0      0    95%
+python/protocol/iap/packets/iap_packet.py                                                          73      8     28      6    86%
+python/protocol/iap/packets/iap_records/alarm_record.py                                            35      4     10      2    87%
+python/protocol/iap/packets/iap_records/communication_record.py                                    45      3     12      1    93%
+python/protocol/iap/packets/iap_records/iap_record.py                                              10      0      0      0   100%
+python/protocol/iap/packets/iap_records/position_record.py                                         67      2     14      2    95%
+python/protocol/iap/packets/iap_records/speed_event_record.py                                      39      4     10      2    88%
+python/protocol/iap/packets/iap_records/speed_record.py                                            51     21     10      1    51%
+python/protocol/iap/packets/vt_packet.py                                                           78      4     18      2    94%
+python/protocol/iridium_satellite/iridium_satellite_packet.py                                      33      4     10      1    88%
+python/protocol/iridium_satellite/iridium_satellite_protocol.py                                   250     87    104     10    65%
+python/protocol/iridium_satellite/iridium_satellite_responses.py                                   16      0      0      0   100%
+python/protocol/j1708/j1708_frame.py                                                               23     13      4      0    37%
+python/protocol/j1708/j1708_protocol.py                                                            28     13      4      0    47%
+python/protocol/local_terminal/local_terminal_protocol.py                                         254    203     90      1    15%
+python/protocol/local_terminal/packet/local_terminal_operation.py                                  56     41     24      0    19%
+python/protocol/local_terminal/packet/running_commentary.py                                        18     13      4      0    23%
+python/protocol/smdp/smdp_packet.py                                                               145     20     64     11    83%
+python/protocol/smdp/smdp_protocol.py                                                             188     73     76     10    54%
+python/protocol/smdp/smdp_sequence_number.py                                                       26      0      4      0   100%
+python/protocol/tachosys/tachosys_packet.py                                                        55      3     12      2    93%
+python/protocol/tachosys/tachosys_protocol.py                                                     107      6     36      4    92%
+python/protocol/tn360/packet/common/tn360_gps_array_item.py                                        49      7      8      4    81%
+python/protocol/tn360/packet/common/tn360_vehicle_data.py                                          30     11     12      3    52%
+python/protocol/tn360/packet/common/vehicle_types.py                                                8      0      0      0   100%
+python/protocol/tn360/packet/custom_cbor/custom_cbor.py                                            19      1      8      2    89%
+python/protocol/tn360/packet/custom_cbor/custom_cbor_tag_base.py                                   14      0      0      0   100%
+python/protocol/tn360/packet/custom_cbor/custom_cbor_tag_time_series_compression.py                21      0      0      0   100%
+python/protocol/tn360/packet/tn360_alarm.py                                                        54     12     16      6    71%
+python/protocol/tn360/packet/tn360_bpm.py                                                          53     14     30      6    57%
+python/protocol/tn360/packet/tn360_ccs.py                                                          37     19     10      0    38%
+python/protocol/tn360/packet/tn360_config.py                                                       41     23     14      0    33%
+python/protocol/tn360/packet/tn360_csr_message_packet.py                                           36     22     10      0    30%
+python/protocol/tn360/packet/tn360_debug.py                                                        35      2      6      1    88%
+python/protocol/tn360/packet/tn360_did3.py                                                         37      4     12      4    80%
+python/protocol/tn360/packet/tn360_did3_response.py                                                22      2      2      1    88%
+python/protocol/tn360/packet/tn360_dtc.py                                                          74     17     26      8    69%
+python/protocol/tn360/packet/tn360_edr.py                                                          35      1     14      5    84%
+python/protocol/tn360/packet/tn360_emr.py                                                         209     49    116     14    71%
+python/protocol/tn360/packet/tn360_ems.py                                                          93     18     42     19    71%
+python/protocol/tn360/packet/tn360_esr.py                                                          25      1      6      1    87%
+python/protocol/tn360/packet/tn360_general_telemetry.py                                            45      1      6      1    92%
+python/protocol/tn360/packet/tn360_generic_packet.py                                               14      0      0      0   100%
+python/protocol/tn360/packet/tn360_gpio.py                                                        218    160     94      0    19%
+python/protocol/tn360/packet/tn360_heli.py                                                         15      1      0      0    93%
+python/protocol/tn360/packet/tn360_info.py                                                         48      3     10      1    90%
+python/protocol/tn360/packet/tn360_ior.py                                                          37      2     14      4    88%
+python/protocol/tn360/packet/tn360_mdm.py                                                          35      3     12      5    83%
+python/protocol/tn360/packet/tn360_mdm_response.py                                                 23      0      2      1    96%
+python/protocol/tn360/packet/tn360_mnavmsg.py                                                      45      6     18      7    76%
+python/protocol/tn360/packet/tn360_movement.py                                                     69     16     18      5    69%
+python/protocol/tn360/packet/tn360_packet.py                                                       33      2      2      1    91%
+python/protocol/tn360/packet/tn360_pr2.py                                                          90     18     42      9    73%
+python/protocol/tn360/packet/tn360_reg.py                                                          40      1     12      2    94%
+python/protocol/tn360/packet/tn360_satdiag.py                                                      37      2      6      1    88%
+python/protocol/tn360/packet/tn360_sum.py                                                         163     25     56      9    79%
+python/protocol/tn360/packet/tn360_vcm.py                                                         158     42     42      3    66%
+python/protocol/tn360/tn360_protocol.py                                                           168     35     48     11    73%
+python/simulator/simulated_executable.py                                                           27      0      8      0   100%
+python/simulator/simulator_hal/hal_accelerometer_gyroscope.py                                      22      0      0      0   100%
+python/simulator/simulator_hal/hal_can.py                                                          26     11      2      0    54%
+python/simulator/simulator_hal/hal_case_tamper.py                                                  21      7      0      0    67%
+python/simulator/simulator_hal/hal_cellular.py                                                    127     82     20      0    31%
+python/simulator/simulator_hal/hal_ext_sensor.py                                                   14      2      0      0    86%
+python/simulator/simulator_hal/hal_flash.py                                                        45     27      2      0    38%
+python/simulator/simulator_hal/hal_gnss.py                                                        163     58     20      0    58%
+python/simulator/simulator_hal/hal_gpio.py                                                         32     17      8      0    38%
+python/simulator/simulator_hal/hal_ignition.py                                                     38     16      2      0    55%
+python/simulator/simulator_hal/hal_j1708.py                                                        31     16      4      0    43%
+python/simulator/simulator_hal/hal_mqtt.py                                                         85     59     20      0    25%
+python/simulator/simulator_hal/hal_power.py                                                        57     22      4      0    57%
+python/simulator/simulator_hal/hal_system.py                                                       48     21     10      0    47%
+python/simulator/simulator_hal/hal_temperature.py                                                  54     25      4      0    50%
+python/simulator/simulator_hal/hal_uart.py                                                         23     10      2      0    52%
+python/simulator/simulator_hal/simulated_flash.py                                                  52     13     10      0    69%
+python/simulator/simulator_hal/simulated_hal_module.py                                             12      0      0      0   100%
+python/simulator/simulator_link/simulator_link.py                                                  98     18     22      4    75%
+python/simulator/simulator_link/simulator_link_protocol.py                                        148     47     42      6    65%
+python/simulator/simulator_link/simulator_link_tcp_server.py                                       98     52     22      3    41%
+python/simulator/simulator_target.py                                                               84      9     12      3    88%
+python/system_config/control_config.py                                                            236     66    124     35    63%
+python/system_config/device_config.py                                                              85     12     34      5    81%
+python/system_config/email_config.py                                                               26      0      4      2    93%
+python/system_config/system_config.py                                                              20      2      0      0    90%
+python/token_pool_service/token_client.py                                                          81     61     26      0    19%
+python/token_pool_service/token_consumer.py                                                        49     27      0      0    45%
+python/token_pool_service/token_container.py                                                       38     23      2      0    38%
+python/token_pool_service/token_pool_service.py                                                    65     45     24      1    26%
+python/token_pool_service/token_pool_tcp_server.py                                                 70     51     12      0    23%
+---------------------------------------------------------------------------------------------------------------------------------
+TOTAL                                                                                           15020   4198   3407    394    66%
+Coverage HTML written to dir output/test_python/html_coverage/
+Coverage XML written to file output/test_python/coverage.xml
+
+Required test coverage of 60% reached. Total coverage: 66.37%
+============================= 301 passed in 42.84s =============================
+'pytest --cov --cov-report term --cov-report html --cov-report xml --cov-fail-under=60 -ra -n auto --junitxml=output/test_python/pytest.xml --html=output/test_python/html_pytest/pytest.html python/ functional_test/ task_assistant.py jenkins_crawler.py launcher.py' exited successfully
+--------------------------------------------------------------------------------

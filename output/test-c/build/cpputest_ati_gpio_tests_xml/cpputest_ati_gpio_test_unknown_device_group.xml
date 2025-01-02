@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="ati_gpio_test_unknown_device_group" tests="2" time="0.001" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="ati_gpio_test_unknown_device_group" name="test_disabling_input_interrupt" assertions="13" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="979">
+</testcase>
+<testcase classname="ati_gpio_test_unknown_device_group" name="test_enabling_input_interrupt" assertions="13" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_gpio_tests/ati_gpio_tests.cpp" line="960">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

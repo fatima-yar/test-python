@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="ati_capabilities_test_group" tests="30" time="0.002" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_digital_output_not_supported" assertions="65" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="865">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_digital_output_supported" assertions="29" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="846">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_digital_output_advance_rugged_variants" assertions="86" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="804">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_digital_output_advance_gateway_variants" assertions="74" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="767">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_support_offline_ephemeris_gnss_unknown" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="760">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_support_offline_ephemeris_g7_gnss" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="753">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_support_offline_ephemeris_m8_gnss" assertions="5" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="746">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_reserved_output_for_iridium_interface" assertions="100" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="686">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_support_iridium_interface" assertions="27" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="655">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_support_iap" assertions="55" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="608">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_support_case_tamper_detection" assertions="118" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="519">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_does_not_support_connector_dc_output" assertions="11" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="504">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_support_switching_dc_output" assertions="15" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="485">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_support_external_gnss_antenna" assertions="27" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="454">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_support_large_external_flash" assertions="27" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="423">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_support_j1708" assertions="27" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="392">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_is_digital_input_configurable_unknown_device" assertions="6" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="372">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_is_digital_input_configurable_advance_rugged" assertions="6" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="352">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_is_digital_input_configurable_advance_gateway" assertions="6" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="332">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_is_digital_input_configurable_20_wire" assertions="6" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="312">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_is_digital_input_configurable_obd" assertions="6" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="301">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_is_digital_input_configurable_9_wire" assertions="6" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="290">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_get_digital_inputs_count" assertions="27" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="259">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_support_wifi" assertions="27" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="228">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_support_number_of_can" assertions="27" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="197">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_support_cranking_detection" assertions="27" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="166">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_support_ignition_tamper_line" assertions="27" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="134">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_support_uart_2" assertions="27" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="103">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_support_uart_field_communication" assertions="27" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="72">
+</testcase>
+<testcase classname="ati_capabilities_test_group" name="ati_capabilities_support_uart_1" assertions="27" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/core/ati_capabilities_tests/ati_capabilities_tests.cpp" line="41">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

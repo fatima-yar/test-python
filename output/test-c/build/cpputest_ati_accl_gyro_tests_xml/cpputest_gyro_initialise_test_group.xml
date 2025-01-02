@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="gyro_initialise_test_group" tests="7" time="0.001" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="gyro_initialise_test_group" name="init_set_sensorwake_gyro_data_fail" assertions="38" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="912">
+</testcase>
+<testcase classname="gyro_initialise_test_group" name="init_set_sensorwake_gyro_bump_fail" assertions="38" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="898">
+</testcase>
+<testcase classname="gyro_initialise_test_group" name="init_set_gyro_fifo_fail" assertions="30" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="886">
+</testcase>
+<testcase classname="gyro_initialise_test_group" name="set_power_successful_after_retry" assertions="55" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="861">
+</testcase>
+<testcase classname="gyro_initialise_test_group" name="set_power_fail_exceed_allowable_retry" assertions="81" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="849">
+</testcase>
+<testcase classname="gyro_initialise_test_group" name="init_success_with_bump_enable" assertions="40" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="829">
+</testcase>
+<testcase classname="gyro_initialise_test_group" name="init_success_with_no_bump_enable" assertions="17" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="822">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>

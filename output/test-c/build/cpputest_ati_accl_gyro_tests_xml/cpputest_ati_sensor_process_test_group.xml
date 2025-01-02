@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="ati_sensor_process_test_group" tests="7" time="0.001" timestamp="2024-11-18T11:25:17">
+<properties>
+</properties>
+<testcase classname="ati_sensor_process_test_group" name="accl_sensor_event_without_callback" assertions="40" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="791">
+</testcase>
+<testcase classname="ati_sensor_process_test_group" name="accl_sensor_event" assertions="46" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="776">
+</testcase>
+<testcase classname="ati_sensor_process_test_group" name="accelerometer_disable_all_fail" assertions="46" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="759">
+</testcase>
+<testcase classname="ati_sensor_process_test_group" name="no_wakeup_event_trigger" assertions="19" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="750">
+</testcase>
+<testcase classname="ati_sensor_process_test_group" name="accl_non_bump_event_trigger" assertions="19" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="739">
+</testcase>
+<testcase classname="ati_sensor_process_test_group" name="accl_bump_event_trigger_multiple_times" assertions="56" time="0.001" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="703">
+</testcase>
+<testcase classname="ati_sensor_process_test_group" name="accl_bump_event_trigger_ignore_first_sample" assertions="34" time="0.000" file="/home/hermesci/jenkins/workspace/STATIC_CHECK_PR-2284/firmware/unittest/tests/ati/ati_accl_gyro_tests/ati_accl_gyro_tests.cpp" line="683">
+</testcase>
+<system-out></system-out>
+<system-err></system-err>
+</testsuite>
