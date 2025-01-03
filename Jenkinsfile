@@ -18,27 +18,25 @@ pipeline {
             }
         }
 
- stage('Create Database Connection and Tables') {
-    steps {
-        script {
-            echo "Connecting to database and creating tables..."
-            
-            // Command to run the Python script that calls the create_tables function
-            def command = "python3 ${WORKSPACE}/main.py"
-            
-            try {
-                // Run the Python script that will call the create_tables function
-                sh command
-            } catch (Exception e) {
-                echo "Error creating connection and tables: ${e.message}"
-                currentBuild.result = 'FAILURE'
-                error("Terminating pipeline due to error in database setup.")
+        stage('Create Database Connection and Tables') {
+            steps {
+                script {
+                    echo "Connecting to database and creating tables..."
+                    
+                    // Command to run the Python script that calls the create_tables function
+                    def command = "python3 ${WORKSPACE}/main.py"
+                    
+                    try {
+                        // Run the Python script that will call the create_tables function
+                        sh command
+                    } catch (Exception e) {
+                        echo "Error creating connection and tables: ${e.message}"
+                        currentBuild.result = 'FAILURE'
+                        error("Terminating pipeline due to error in database setup.")
+                    }
+                }
             }
         }
-    }
-}
-
-     
 
         stage('Finish') {
             steps {
