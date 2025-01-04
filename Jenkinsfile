@@ -43,7 +43,6 @@ pipeline {
                     // Path to the test_c directory where the files are located
                     def test_c_Directory = "../test-python/output/test_c"
                     echo 'Inserting data into test_c...'
-                    print(f"Looking in directory: {directory}")
                     
                     // Command to insert data into test_c table
                     def command = """python3 ${WORKSPACE}/database_functions.py insert_into_test_c_and_test_python_table ${test_c_Directory} ${env.PR_NUMBER} ${env.CREATED_AT} 'test_c'"""
