@@ -29,6 +29,7 @@ created_at= '2024-01-01'
 
 
 # Function to create a database connection and return the connection and cursor
+
 def create_connection():
     try:
         conn = psycopg2.connect(
@@ -39,7 +40,10 @@ def create_connection():
             port=os.environ.get('DB_PORT', '5432')
         )
         print("Database connection successful")
-        return conn
+        
+        # Create cursor
+        cur = conn.cursor()
+        return conn, cur
     except Exception as e:
         print(f"Error connecting to database: {e}")
         raise
