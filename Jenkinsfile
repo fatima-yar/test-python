@@ -41,7 +41,7 @@ pipeline {
             steps {
                 script {
                     // Path to the test_c directory where the files are located
-                    def test_c_Directory = "../test-python/output/test_c"
+                    def test_c_Directory = "../test-python/output/test-c"
                     echo 'Inserting data into test_c...'
                     
                     // Command to insert data into test_c table
