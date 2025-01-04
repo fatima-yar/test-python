@@ -32,17 +32,17 @@ created_at= '2024-01-01'
 def create_connection():
     try:
         conn = psycopg2.connect(
-            dbname='your_dbname', 
-            user='your_user', 
-            password='your_password', 
-            host='your_host', 
-            port='your_port'
+            dbname=os.environ.get('DB_NAME', 'postgres'),
+            user=os.environ.get('DB_USER', 'postgres'),
+            password=os.environ.get('DB_PASSWORD', 'postgres'),
+            host=os.environ.get('DB_HOST', 'localhost'),
+            port=os.environ.get('DB_PORT', '5432')
         )
-        cur = conn.cursor()
-        return conn, cur
+        print("Database connection successful")
+        return conn
     except Exception as e:
         print(f"Error connecting to database: {e}")
-        return None, None
+        raise
 
 # Function to create tables in the database
 def create_tables(cursor):
@@ -129,80 +129,80 @@ if __name__ == "__main__":
 
 
 
-# # Unified function to insert data fot test_c and test_python into the database
-# def insert_data(directory, pr_number, table_name,created_at, cursor):
-#     """
-#     Insert data into the specified table based on the folder structure.
-#     This function can be used for `insert_onto target_and_simulator_data`, `insert_into_test_c_table`, and `insert_into_test_python_table`.
-#     """
-#     # Get the files (either .txt, .xml, .js, .html, etc.)
-#     all_files = []
+# Unified function to insert data fot test_c and test_python into the database
+def insert_data(directory, pr_number, table_name,created_at, cursor):
+    """
+    Insert data into the specified table based on the folder structure.
+    This function can be used for `insert_onto target_and_simulator_data`, `insert_into_test_c_table`, and `insert_into_test_python_table`.
+    """
+    # Get the files (either .txt, .xml, .js, .html, etc.)
+    all_files = []
 
-#     # Special handling for test_c and test_python: search across all levels of subfolders for files
-#     for root, dirs, files in os.walk(directory):
-#         for file in files:
-#             if file == 'stdout.txt': # exclude this file
-#                 continue
-#             if file.endswith(('.txt', '.xml', '.js', '.html' , 'css')):
-#                 all_files.append(os.path.join(root, file))
+    # Special handling for test_c and test_python: search across all levels of subfolders for files
+    for root, dirs, files in os.walk(directory):
+        for file in files:
+            if file == 'stdout.txt': # exclude this file
+                continue
+            if file.endswith(('.txt', '.xml', '.js', '.html' , 'css')):
+                all_files.append(os.path.join(root, file))
 
-#     if not all_files:
-#         raise FileNotFoundError(f"No appropriate files found in the folder: {directory}")
+    if not all_files:
+        raise FileNotFoundError(f"No appropriate files found in the folder: {directory}")
     
-#     excluded_folders = ['CppUTestProj-prefix', 'Testing', 'src', 'temp', 'CppUTestProj-build']
+    excluded_folders = ['CppUTestProj-prefix', 'Testing', 'src', 'temp', 'CppUTestProj-build']
 
-#     # Insert each file into the database
-#     for file_path in all_files:
-#         file_name = os.path.basename(file_path)
+    # Insert each file into the database
+    for file_path in all_files:
+        file_name = os.path.basename(file_path)
         
-#         if 'cache' in file_name.lower():
-#             continue
+        if 'cache' in file_name.lower():
+            continue
         
-#         # Read file content and encode it
-#         with open(file_path, 'r') as file:
-#             file_text = file.read()
+        # Read file content and encode it
+        with open(file_path, 'r') as file:
+            file_text = file.read()
 
 
-#             file_content = cbor2.dumps(file_text)
+            file_content = cbor2.dumps(file_text)
 
 
-#         folder_name_1 = os.path.basename(os.path.dirname(file_path))  # Parent folder
-#         dir_path=os.path.dirname(file_path)
-#         test_name=os.path.basename(directory)
+        folder_name_1 = os.path.basename(os.path.dirname(file_path))  # Parent folder
+        dir_path=os.path.dirname(file_path)
+        test_name=os.path.basename(directory)
 
 
 
-#         if folder_name_1 == 'coverage' or folder_name_1 == 'html_coverage' or folder_name_1 == 'html_pytest':
-#             folder_name_2=''
+        if folder_name_1 == 'coverage' or folder_name_1 == 'html_coverage' or folder_name_1 == 'html_pytest':
+            folder_name_2=''
 
-#         else:
-#             dir_path=os.path.dirname(file_path)
-#             build_dir=os.path.dirname(dir_path)
-#             get_dir_folder=os.path.basename(build_dir)
+        else:
+            dir_path=os.path.dirname(file_path)
+            build_dir=os.path.dirname(dir_path)
+            get_dir_folder=os.path.basename(build_dir)
 
-#             folder_name_1=os.path.basename(build_dir) #'build' folder
-#             folder_name_2=os.path.basename(dir_path)  # Subfolder or file name
-#             # Exclude 'CppUTestProj-prefix' and 'Testing' folders
-#             # Skip files in excluded folders
-#             if folder_name_1 in excluded_folders or folder_name_2 in excluded_folders or get_dir_folder in excluded_folders :
-#                 continue  # Skip this file
+            folder_name_1=os.path.basename(build_dir) #'build' folder
+            folder_name_2=os.path.basename(dir_path)  # Subfolder or file name
+            # Exclude 'CppUTestProj-prefix' and 'Testing' folders
+            # Skip files in excluded folders
+            if folder_name_1 in excluded_folders or folder_name_2 in excluded_folders or get_dir_folder in excluded_folders :
+                continue  # Skip this file
 
-#         if folder_name_1== test_name or folder_name_2 == test_name:
-#             folder_name_1=''
-#             folder_name_2=''
+        if folder_name_1== test_name or folder_name_2 == test_name:
+            folder_name_1=''
+            folder_name_2=''
         
 
-#         # Prepare insert statement
-#         insert_script = f'''INSERT INTO {table_name} (pr_number, folder_name_1, folder_name_2, file_name, created_at, file_content)
-#                             VALUES (%s, %s, %s, %s, %s, %s)'''
-#         insert_values = (pr_number, folder_name_1, folder_name_2, file_name, created_at, file_content)
+        # Prepare insert statement
+        insert_script = f'''INSERT INTO {table_name} (pr_number, folder_name_1, folder_name_2, file_name, created_at, file_content)
+                            VALUES (%s, %s, %s, %s, %s, %s)'''
+        insert_values = (pr_number, folder_name_1, folder_name_2, file_name, created_at, file_content)
         
-#         # Execute the insert
-#         cursor.execute(insert_script, insert_values)
+        # Execute the insert
+        cursor.execute(insert_script, insert_values)
 
-# # Consistent function to insert test_c & test_python data
-# def insert_into_test_c_and_test_python_table(directory, pr_number, created_at, cursor, table_name):
-#     insert_data(directory, pr_number, table_name, created_at, cursor)
+# Consistent function to insert test_c & test_python data
+def insert_into_test_c_and_test_python_table(directory, pr_number, created_at, cursor, table_name):
+    insert_data(directory, pr_number, table_name, created_at, cursor)
 
 
 # # insert AFT data into the database
